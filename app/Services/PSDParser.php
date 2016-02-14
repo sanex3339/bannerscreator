@@ -9,13 +9,25 @@ class PSDParser
 {
     const PSD_EXTENSION = 'psd';
     const IMAGE_EXTENSION = 'png';
-
     const LOGO_LAYER_NAME = 'logo';
 
     /**
-     * @var array
+     * Path for processed image, relative to `/public` directory
      */
-    private $convertedFiles = [];
+    const PROCESSED_IMAGES_PATH = '/processed-images';
+
+    /**
+     * Converted images data
+     *
+     * @var array[0]
+     *          array[
+     *              ['imageName']
+     *              ['imagePath']
+     *              ['imageExtension']
+     *              ['hasLogo']
+     *          ]
+     */
+    private $convertedImagesData = [];
 
     /**
      * @var \Symfony\Component\HttpFoundation\File\UploadedFile|array|null
@@ -40,13 +52,17 @@ class PSDParser
     public function __construct($files, $sourcePath)
     {
         $this->files = $files;
+
         $this->sourcePath = $sourcePath;
-        $this->destinationPath = base_path() . '/public/processed-images/';
+        $this->destinationPath = public_path() . PSDParser::PROCESSED_IMAGES_PATH;
     }
 
-    public function getConvertedFileNames()
+    /**
+     * @return array
+     */
+    public function getConvertedImagesData()
     {
-        return $this->convertedFiles;
+        return $this->convertedImagesData;
     }
 
     /**
@@ -68,13 +84,12 @@ class PSDParser
             }
 
             $this->convertPSDFile($file);
-            $this->convertedFiles[] = $this->getOutputImageName($file);
         }
     }
 
     /**
      * Converting of a single PSD file to jpg.
-     * Converting split into two stages:
+     * Converting splits into two stages:
      *  - finding and converting logo into separate image;
      *  - converting all layers into another image;
      *
@@ -82,33 +97,57 @@ class PSDParser
      */
     private function convertPSDFile($file) {
         $imageName = $this->getOutputImageName($file);
+        $outputImageDirectory = $this->getOutputImageDirectory($imageName);
 
-        $this->saveImage(
-            $this->getPSDLogoLayer($file),
-            $this->getOutputDirectory($imageName),
-            PSDParser::LOGO_LAYER_NAME
-        );
+        $logoLayerIndex = null;
+        $hasLogoLayer = $this->hasLogoLayer($file, $logoLayerIndex);
+
+        if ($hasLogoLayer) {
+            $this->saveImage(
+                $this->getPSDLogoLayer($file, $logoLayerIndex),
+                $outputImageDirectory,
+                PSDParser::LOGO_LAYER_NAME
+            );
+        }
 
         $this->saveImage(
             $this->getFullPSD($file),
-            $this->getOutputDirectory($imageName),
+            $outputImageDirectory,
             $imageName
         );
+
+        $this->convertedImagesData[] = [
+            'imagePath' => $this->getOutputPublicImageDirectory($imageName),
+            'imageName' => $imageName,
+            'imageExtension' => PSDParser::IMAGE_EXTENSION,
+            'hasLogo' => $hasLogoLayer
+        ];
     }
 
     /**
-     * Get output directory in which image must saved
+     * Return output directory in which image will saved
      *
      * @param $imageName
      * @return string
      */
-    private function getOutputDirectory($imageName)
+    private function getOutputImageDirectory($imageName)
     {
-        return $this->destinationPath . $imageName . '/';
+        return $this->destinationPath . '/' . $imageName;
     }
 
     /**
-     * Returns image name with based on PSD name with image extension
+     * Return output image directory, relative to `/public` folder
+     *
+     * @param $imageName
+     * @return string
+     */
+    private function getOutputPublicImageDirectory($imageName)
+    {
+        return PSDParser::PROCESSED_IMAGES_PATH . '/' . $imageName;
+    }
+
+    /**
+     * Return output image name based on PSD name with image extension
      *
      * @param $file
      * @return string
@@ -121,14 +160,48 @@ class PSDParser
      * Return Imagick object with logo layer
      *
      * @param $file
+     * @param $logoLayerIndex
      * @return Imagick
      */
-    private function getPSDLogoLayer($file)
+    private function getPSDLogoLayer($file, $logoLayerIndex)
     {
         $inputImage = new Imagick($this->sourcePath . $file->getClientOriginalName());
         $outputImage = new Imagick();
 
-        $hasLogoFlag = false;
+        $inputImage->setIteratorIndex($logoLayerIndex);
+        $outputImage->addImage($inputImage->getimage());
+
+        $layerData = $outputImage->getImagePage();
+        $outputImage->setImagePage($layerData['width'], $layerData['height'], 0, 0);
+
+        return $outputImage;
+    }
+
+    /**
+     * Return copy of initial Imagick object with all layers
+     *
+     * @param $file
+     * @return Imagick
+     */
+    private function getFullPSD($file)
+    {
+        $inputImage = new Imagick($this->sourcePath . $file->getClientOriginalName());
+        $outputImage = clone $inputImage;
+
+        return $outputImage;
+    }
+
+    /**
+     * Check if logo layer exist in $file
+     * Put logo layer index into $logoLayerIndex
+     *
+     * @param $file
+     * @param null $logoLayerIndex
+     * @return bool
+     */
+    private function hasLogoLayer($file, &$logoLayerIndex = null)
+    {
+        $inputImage = new Imagick($this->sourcePath . $file->getClientOriginalName());
 
         $layersCount = $inputImage->getNumberImages();
 
@@ -147,39 +220,16 @@ class PSDParser
                 continue;
             }
 
-            $hasLogoFlag = true;
+            $logoLayerIndex = $i;
 
-            $outputImage->addImage($inputImage->getimage());
-
-            $layerData = $outputImage->getImagePage();
-            $outputImage->setImagePage($layerData['width'], $layerData['height'], 0, 0);
-
-            break;
+            return true;
         }
 
-        if (!$hasLogoFlag) {
-            return new Imagick();
-        }
-
-        return $outputImage;
+        return false;
     }
 
     /**
-     * Return copy of initial Imagick object
-     *
-     * @param $file
-     * @return Imagick
-     */
-    private function getFullPSD($file)
-    {
-        $inputImage = new Imagick($this->sourcePath . $file->getClientOriginalName());
-        $outputImage = clone $inputImage;
-
-        return $outputImage;
-    }
-
-    /**
-     * Saving image into directory
+     * Save Imagick $outputImage with $imageName into $outputDirectory
      *
      * @param Imagick $outputImage
      * @param $outputDirectory
@@ -197,7 +247,7 @@ class PSDParser
         }
 
         $outputImage->setImageFormat(PSDParser::IMAGE_EXTENSION);
-        $outputImage->writeImage($outputDirectory . $imageName . '.' . PSDParser::IMAGE_EXTENSION);
+        $outputImage->writeImage($outputDirectory . '/' . $imageName . '.' . PSDParser::IMAGE_EXTENSION);
 
     }
 }

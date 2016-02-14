@@ -67,8 +67,6 @@ export class PSDUploader {
         this.uploadedTemplatesService = uploadedTemplatesService;
     }
 
-    public run (): void {}
-
     /**
      * @param fileInput
      */
@@ -89,7 +87,7 @@ export class PSDUploader {
 
         this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(
             (result) => {
-                this.saveUploadedTemplatesData(result['files']);
+                this.saveUploadedTemplatesData(result['images']);
                 this.redirectService.redirect(this.redirectRoute)
             },
             (error) => {
@@ -107,7 +105,12 @@ export class PSDUploader {
     private saveUploadedTemplatesData (files: any[]): void {
         for (let file of files) {
             this.uploadedTemplatesService.addTemplate(
-                new UploadedTemplate(file, false)
+                new UploadedTemplate(
+                    file['imageName'],
+                    file['imagePath'],
+                    file['imageExtension'],
+                    file['hasLogo']
+                )
             );
         }
     }

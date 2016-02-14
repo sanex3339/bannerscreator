@@ -1,4 +1,5 @@
 import { Component, Inject, Injectable } from 'angular2/core';
+import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 import { UploadedTemplatesService } from "../../Services/UploadedTemplatesService/UploadedTemplatesService";
 
 @Injectable()
@@ -8,16 +9,20 @@ import { UploadedTemplatesService } from "../../Services/UploadedTemplatesServic
 })
 export class BannersEditor {
     /**
-     * @type string[]
+     * @type UploadedTemplate[]
      */
-    templateNames: string[];
+    uploadedTemplates: UploadedTemplate[];
 
+    /**
+     * @type UploadedTemplatesService
+     */
     uploadedTemplatesService: UploadedTemplatesService;
 
+    /**
+     * @param uploadedTemplatesService
+     */
     constructor (uploadedTemplatesService: UploadedTemplatesService) {
         this.uploadedTemplatesService = uploadedTemplatesService;
-
-        console.log('BannersEditor was loaded');
-        console.log(this.uploadedTemplatesService.getUploadedTemplates());
+        this.uploadedTemplates = this.uploadedTemplatesService.getUploadedTemplates();
     }
 }

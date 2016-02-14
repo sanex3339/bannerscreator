@@ -38,11 +38,11 @@ class UploadController extends Controller
 
         $psdParser = new PSDParser($files, $path);
         $psdParser->parse();
-        $convertedFiles = $psdParser->getConvertedFileNames();
+        $convertedImagesData = $psdParser->getConvertedImagesData();
 
         return json_encode([
             'success' => true,
-            'files' => $convertedFiles
+            'images' => $convertedImagesData
         ]);
     }
 }
