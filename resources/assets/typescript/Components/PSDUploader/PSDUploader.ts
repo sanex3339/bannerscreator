@@ -81,12 +81,20 @@ export class PSDUploader {
     }
 
     public psdTemplateUploadHandler () {
+        if (!this.psdTemplates.length) {
+            return;
+        }
+
         this.fileUploadService.progress$.subscribe(progress => {
             this.uploadProgress = progress;
         });
 
         this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(
             (result) => {
+                if (!result['images']) {
+                    return;
+                }
+
                 this.saveUploadedTemplatesData(result['images']);
                 this.redirectService.redirect(this.redirectRoute)
             },
