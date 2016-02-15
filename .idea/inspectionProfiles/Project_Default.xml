@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="10">
+          <list size="12">
             <item index="0" class="java.lang.String" itemvalue="(change)" />
             <item index="1" class="java.lang.String" itemvalue="[aria-valuenow]" />
             <item index="2" class="java.lang.String" itemvalue="[attr.aria-valuenow]" />
@@ -15,6 +15,8 @@
             <item index="7" class="java.lang.String" itemvalue="[style.display]" />
             <item index="8" class="java.lang.String" itemvalue="[ngif]" />
             <item index="9" class="java.lang.String" itemvalue="[ngfor]" />
+            <item index="10" class="java.lang.String" itemvalue="[href]" />
+            <item index="11" class="java.lang.String" itemvalue="[class]" />
           </list>
         </value>
       </option>
@@ -23,7 +25,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="9">
+          <list size="17">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -33,6 +35,14 @@
             <item index="6" class="java.lang.String" itemvalue="my-app" />
             <item index="7" class="java.lang.String" itemvalue="banners-creator" />
             <item index="8" class="java.lang.String" itemvalue="progress-bar" />
+            <item index="9" class="java.lang.String" itemvalue="banners-creator-overview" />
+            <item index="10" class="java.lang.String" itemvalue="banners-creator-general" />
+            <item index="11" class="java.lang.String" itemvalue="banners-creator-general-settings" />
+            <item index="12" class="java.lang.String" itemvalue="banners-creator-navigation" />
+            <item index="13" class="java.lang.String" itemvalue="banners-editor-navigation" />
+            <item index="14" class="java.lang.String" itemvalue="banners-editor-overview" />
+            <item index="15" class="java.lang.String" itemvalue="banners-editor-general-settings" />
+            <item index="16" class="java.lang.String" itemvalue="navigation-tab" />
           </list>
         </value>
       </option>

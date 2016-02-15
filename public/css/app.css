@@ -6466,6 +6466,11 @@ button.close {
   float: none;
   margin: 0 auto;
 }
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
 .img-responsive,
 .thumbnail > img,
 .thumbnail a > img,
@@ -6473,6 +6478,9 @@ button.close {
 .carousel-inner > .item > a > img {
   max-width: 100%;
   height: auto;
+}
+.header {
+  margin: 20px 0;
 }
 .loading-placeholder-wrapper {
   position: fixed;

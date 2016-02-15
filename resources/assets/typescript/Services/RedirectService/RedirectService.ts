@@ -1,5 +1,7 @@
 import { Component, Inject, Injectable } from 'angular2/core';
+import { Observable } from "rxjs/Observable";
 import { Router } from 'angular2/router';
+import 'rxjs/Rx';
 
 @Injectable()
 export class RedirectService {
@@ -17,14 +19,13 @@ export class RedirectService {
      *
      * @param link
      * @param delay
-     * @returns {Promise<T>}
      */
-    public redirect (link: string, delay: number = 800) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
+    public redirect (link: string, delay: number = 800): void {
+        Observable
+            .of(true)
+            .delay(delay)
+            .subscribe((success) => {
                 this.router.navigate([link]);
-                resolve();
-            }, delay);
-        });
+            });
     }
 }

@@ -2,6 +2,13 @@ import { Component, Injectable } from 'angular2/core';
 
 @Injectable()
 export class UploadedTemplate {
+    /**
+     * Template logo file name
+     *
+     * @type {string}
+     */
+    private static LOGO_NAME: string = 'logo';
+
     private name: string;
     private path: string;
     private extension: string;
@@ -53,5 +60,12 @@ export class UploadedTemplate {
      */
     public getFullPath (): string {
         return `${this.path}/${this.name}.${this.extension}`;
+    }
+
+    /**
+     * @returns {string}
+     */
+    public getLogoPath (): string {
+        return `${this.path}/${UploadedTemplate.LOGO_NAME}.${this.extension}`;
     }
 }

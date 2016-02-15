@@ -51,7 +51,7 @@ elixir(function(mix) {
                 { test: /\.ts/, loader: 'ts-loader' }
             ]
         },
-        plugins: [
+        /*plugins: [
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
                     warnings: false
@@ -59,7 +59,7 @@ elixir(function(mix) {
                 minimize: true,
                 mangle: false
             })
-        ]
+        ]*/
     }, 'public/js', 'resources/assets/typescript');
 
     /**
