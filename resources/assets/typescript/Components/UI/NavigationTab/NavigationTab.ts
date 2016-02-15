@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { NavigationTabItem } from './Interfaces/NavigationTabItem';
 
 @Component({
@@ -6,7 +6,7 @@ import { NavigationTabItem } from './Interfaces/NavigationTabItem';
     'selector': 'navigation-tab',
     'templateUrl': '/templates/UIComponents.NavigationTab.main'
 })
-export class NavigationTab {
+export class NavigationTab implements OnInit {
     /**
      * Array with tab objects
      *
@@ -14,5 +14,29 @@ export class NavigationTab {
      */
     private tabs: NavigationTabItem[] = [];
 
-    constructor () {}
+    ngOnInit (): void {
+        this.applyActiveTabsLimit();
+    }
+
+    /**
+     * If array of NavigationTabItem has more than one NavigationTabItem with `active = true` property -
+     * set to false all that properties, except first one.
+     */
+    private applyActiveTabsLimit (): void {
+        let firstActiveFlag: boolean = false;
+
+        for (let tab of this.tabs) {
+            if (!tab.active) {
+                continue;
+            }
+
+            if (!firstActiveFlag) {
+                firstActiveFlag = true;
+
+                continue;
+            }
+
+            tab.active = false;
+        }
+    }
 }
