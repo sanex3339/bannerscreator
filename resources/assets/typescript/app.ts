@@ -1,4 +1,6 @@
 ///<reference path="../../../node_modules/angular2/typings/browser.d.ts"/>
+///<reference path="Typings/underscore/underscore.d.ts"/>
+
 
 import { AppComponent } from './app.component';
 import { ROUTER_PROVIDERS } from "angular2/router";
