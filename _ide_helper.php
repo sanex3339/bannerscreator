@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.14 on 2016-02-10.
+ * Generated for Laravel 5.2.14 on 2016-02-15.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -10167,6 +10167,21 @@ namespace {
          */
         public static function getNames(){
             return \Illuminate\View\Factory::getNames();
+        }
+        
+    }
+
+
+    class DirectoryHelper extends \App\Support\Facades\Directory{
+        
+        /**
+         * Make a new directory, if that directory not exist.
+         *
+         * @param $dirPath
+         * @static 
+         */
+        public static function makeDirectory($dirPath){
+            return \App\Helpers\Directory::makeDirectory($dirPath);
         }
         
     }

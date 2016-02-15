@@ -2,8 +2,9 @@
 
 namespace BannersCreator\Services;
 
-use Imagick;
+use DirectoryHelper;
 use File;
+use Imagick;
 
 class PSDParser
 {
@@ -72,9 +73,7 @@ class PSDParser
     {
         File::cleanDirectory($this->destinationPath);
 
-        if (!File::exists($this->destinationPath)) {
-            File::makeDirectory($this->destinationPath);
-        }
+        DirectoryHelper::makeDirectory($this->destinationPath);
 
         foreach ($this->files as $file)
         {
@@ -120,7 +119,7 @@ class PSDParser
             'imagePath' => $this->getOutputPublicImageDirectory($imageName),
             'imageName' => $imageName,
             'imageExtension' => PSDParser::IMAGE_EXTENSION,
-            'hasLogo' => $hasLogoLayer
+            'hasLogo' => $hasLogoLayer,
         ];
     }
 
@@ -241,13 +240,9 @@ class PSDParser
             return;
         }
 
-        if (!File::exists($outputDirectory))
-        {
-            File::makeDirectory($outputDirectory);
-        }
+        DirectoryHelper::makeDirectory($outputDirectory);
 
         $outputImage->setImageFormat(PSDParser::IMAGE_EXTENSION);
         $outputImage->writeImage($outputDirectory . '/' . $imageName . '.' . PSDParser::IMAGE_EXTENSION);
-
     }
 }
