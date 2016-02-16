@@ -1,22 +1,18 @@
-import { AppInjector } from '../../AppInjector';
-import { Component, Inject, Injectable, Injector } from 'angular2/core';
-import { CanActivate, ComponentInstruction } from 'angular2/router';
+import { Component, Inject, Injectable } from 'angular2/core';
+import { CanActivate } from 'angular2/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { RedirectService } from '../../Services/RedirectService/RedirectService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
 import { Stage } from '../../Enums/Stage';
+import { SetStage } from '../../RouteHooks/SetStage';
 import { StageCheck } from '../../RouteHooks/StageCheck';
-import { StageService } from '../../Services/StageService/StageService';
 import { UploadStage } from '../../Models/Stages/UploadStage';
-import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
-import { UploadedTemplatesService } from "../../Services/UploadedTemplatesService/UploadedTemplatesService";
+import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
+import { UploadedTemplatesService } from '../../Services/UploadedTemplatesService/UploadedTemplatesService';
 
 @Injectable()
-@CanActivate((next: ComponentInstruction, previous: ComponentInstruction) => {
-    let injector: Injector = AppInjector(),
-        stageService = injector.get(StageService);
-
-    stageService.setStage(Stage.UploadStage, new UploadStage());
+@CanActivate(() => {
+    SetStage(Stage.UploadStage, new UploadStage());
 
     return StageCheck();
 })
@@ -74,7 +70,6 @@ export class PSDUploader {
     /**
      * @param fileUploadService
      * @param redirectService
-     * @param stageService
      * @param uploadedTemplatesService
      */
     constructor (

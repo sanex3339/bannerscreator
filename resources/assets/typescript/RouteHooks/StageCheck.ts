@@ -1,16 +1,16 @@
 import { AppInjector } from '../AppInjector';
+import { ApplicationStageService } from '../Services/ApplicationStageService/ApplicationStageService';
 import { Injector } from 'angular2/core';
 import { Router, ComponentInstruction } from 'angular2/router';
-import { StageService } from '../Services/StageService/StageService';
 import { UploadedTemplatesService } from '../Services/UploadedTemplatesService/UploadedTemplatesService';
 
 export const StageCheck = () => {
     let injector: Injector = AppInjector(),
         router: Router = injector.get(Router),
-        stageService: StageService = injector.get(StageService);
+        applicationStageService: ApplicationStageService = injector.get(ApplicationStageService);
 
     return new Promise((resolve) => {
-        stageService.stageCondition()
+        applicationStageService.stageCondition()
             .subscribe((result) => {
                 if (result) {
                     resolve(true);

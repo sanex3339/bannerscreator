@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Stage } from '../../Enums/Stage';
 
 @Injectable()
-export class StageService {
+export class ApplicationStageService {
     /**
      * Active application stage
      */

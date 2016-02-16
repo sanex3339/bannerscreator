@@ -4,10 +4,7 @@
             [class.active]="tab.isActive()"
             (click)="selectTab(tab)"
     >
-        <a
-                data-toggle="tab"
-                aria-expanded="false"
-        >
+        <a href="#" (click)="false">
             @{{ tab.getTitle() }}
         </a>
     </li>
