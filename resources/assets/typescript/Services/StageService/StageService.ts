@@ -1,12 +1,21 @@
+import { ApplicationStage } from '../../Interfaces/ApplicationStage';
 import { Component, Injectable } from 'angular2/core';
-import { UploadStage } from '../../Models/Stages/UploadStage';
-import { EditStage } from '../../Models/Stages/EditStage';
 import { Observable } from 'rxjs/Observable';
 import { Stage } from '../../Enums/Stage';
 
 @Injectable()
 export class StageService {
-    private stage: Stage;
+    /**
+     * Active application stage
+     */
+    private activeStage: Stage;
+
+    /**
+     * Array with all application stages
+     *
+     * @type {Array}
+     */
+    private stages: ApplicationStage[] = [];
 
     constructor () {}
 
@@ -16,16 +25,22 @@ export class StageService {
      * @returns {Observable<T>}
      */
     public getStage (): Observable<Stage> {
-        return Observable.of(this.stage);
+        return Observable.of(this.activeStage);
     }
 
     /**
+     * Add new application stage into stage list
      * Set current application stage
      *
-     * @param stage
+     * @param stageType
+     * @param applicationStage
      */
-    public setStage (stage: Stage): void {
-        this.stage = stage;
+    public setStage (stageType: Stage, applicationStage: ApplicationStage): void {
+        if (!this.stages[stageType]) {
+            this.stages[stageType] = applicationStage;
+        }
+
+        this.activeStage = stageType;
     }
 
     /**
@@ -34,13 +49,6 @@ export class StageService {
      * @returns {Observable<T>}
      */
     public stageCondition (): Observable<boolean> {
-        switch (this.stage) {
-            case Stage.UploadStage:
-                return Observable.of(UploadStage.condition());
-            case Stage.EditStage:
-                return Observable.of(EditStage.condition());
-            default:
-                return Observable.of(true);
-        }
+        return Observable.of(this.stages[this.activeStage].stageCondition());
     }
 }

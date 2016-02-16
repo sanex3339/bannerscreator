@@ -4,7 +4,7 @@ import { Router, ComponentInstruction } from 'angular2/router';
 import { StageService } from '../Services/StageService/StageService';
 import { UploadedTemplatesService } from '../Services/UploadedTemplatesService/UploadedTemplatesService';
 
-export const StageCheck = (next: ComponentInstruction, previous: ComponentInstruction) => {
+export const StageCheck = () => {
     let injector: Injector = AppInjector(),
         router: Router = injector.get(Router),
         stageService: StageService = injector.get(StageService);

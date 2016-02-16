@@ -1,1 +1,4 @@
-export enum Stage {UploadStage, EditStage};
+export enum Stage {
+    UploadStage,
+    EditStage
+};
