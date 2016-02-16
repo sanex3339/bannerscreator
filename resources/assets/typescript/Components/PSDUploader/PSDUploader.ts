@@ -2,6 +2,8 @@ import { Component, Inject, Injectable } from 'angular2/core';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { RedirectService } from '../../Services/RedirectService/RedirectService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
+import { Stage } from '../../Enums/Stage';
+import { StageService } from '../../Services/StageService/StageService';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 import { UploadedTemplatesService } from "../../Services/UploadedTemplatesService/UploadedTemplatesService";
 
@@ -57,14 +59,23 @@ export class PSDUploader {
      */
     private uploadRoute: string = '/api/upload-file';
 
+    /**
+     * @param fileUploadService
+     * @param redirectService
+     * @param stageService
+     * @param uploadedTemplatesService
+     */
     constructor (
         @Inject(FileUploadService) fileUploadService: FileUploadService,
         @Inject(RedirectService) redirectService: RedirectService,
+        stageService: StageService,
         uploadedTemplatesService: UploadedTemplatesService
     ) {
         this.fileUploadService = fileUploadService;
         this.redirectService = redirectService;
         this.uploadedTemplatesService = uploadedTemplatesService;
+
+        stageService.setStage(Stage.UploadStage);
     }
 
     /**

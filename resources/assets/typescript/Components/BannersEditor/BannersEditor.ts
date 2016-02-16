@@ -1,11 +1,16 @@
 import { Component, Inject, Injectable } from 'angular2/core';
 import { BannersEditorTemplate } from './BannersEditorTemplate';
+import { CanActivate, ComponentInstruction } from 'angular2/router';
+import { Stage } from '../../Enums/Stage';
+import { StageCheck } from '../../RouteHooks/StageCheck';
+import { StageService } from '../../Services/StageService/StageService';
 import { Tabs } from '../UI/Tabs/Tabs';
 import { Tab } from '../UI/Tabs/Tab';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 import { UploadedTemplatesService } from "../../Services/UploadedTemplatesService/UploadedTemplatesService";
 
 @Injectable()
+@CanActivate(StageCheck)
 @Component({
     'directives': [BannersEditorTemplate, Tabs, Tab],
     'selector': 'state-template',
@@ -18,9 +23,18 @@ export class BannersEditor {
     uploadedTemplates: UploadedTemplate[];
 
     /**
+     * @param stageService
      * @param uploadedTemplatesService
      */
-    constructor (uploadedTemplatesService: UploadedTemplatesService) {
-        this.uploadedTemplates = uploadedTemplatesService.getUploadedTemplates();
+    constructor (
+        stageService: StageService,
+        uploadedTemplatesService: UploadedTemplatesService
+    ) {
+        uploadedTemplatesService.getUploadedTemplates()
+            .subscribe((result) => {
+                this.uploadedTemplates = result;
+            });
+
+        stageService.setStage(Stage.EditStage);
     }
 }

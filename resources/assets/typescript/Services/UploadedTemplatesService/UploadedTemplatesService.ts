@@ -1,4 +1,5 @@
 import { Component, Injectable } from 'angular2/core';
+import { Observable } from 'rxjs/Observable';
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class UploadedTemplatesService {
         this.uploadedTemplates.push(template);
     }
 
-    public getUploadedTemplates (): UploadedTemplate[] {
-        return this.uploadedTemplates;
+    public getUploadedTemplates (): Observable<UploadedTemplate[]> {
+        return Observable.of(this.uploadedTemplates);
     }
 }
