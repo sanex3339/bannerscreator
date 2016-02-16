@@ -1,8 +1,7 @@
 import { AppInjector } from '../AppInjector';
 import { ApplicationStageService } from '../Services/ApplicationStageService/ApplicationStageService';
 import { Injector } from 'angular2/core';
-import { Router, ComponentInstruction } from 'angular2/router';
-import { UploadedTemplatesService } from '../Services/UploadedTemplatesService/UploadedTemplatesService';
+import { Router } from 'angular2/router';
 
 export const StageCheck = () => {
     let injector: Injector = AppInjector(),
