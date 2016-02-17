@@ -1,11 +1,10 @@
 import { Component } from 'angular2/core';
 import { Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
-import { ObservableData } from '../../Interfaces/ObservableData';
 import 'rxjs/add/operator/share';
 
 @Injectable()
-export class FileUploadService implements ObservableData {
+export class FileUploadService {
     /**
      * @param Observable<number>
      */

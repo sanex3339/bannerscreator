@@ -1,6 +1,6 @@
 import { Component, Injectable } from 'angular2/core';
-import { Observable } from 'rxjs/Observable';
-import { ObservableData } from '../../Interfaces/ObservableData';
+import { Observable, Subject } from 'rxjs';
+import { ObservableData } from '../../Interfaces/ObservableData'
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 
 @Injectable()
@@ -9,44 +9,71 @@ import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate
 })
 export class UploadedTemplatesService implements ObservableData {
     /**
-     * @type Observable<UploadedTemplate[]
+     * @type {Subject<UploadedTemplate>}
      */
-    private uploadedTemplates$: Observable<UploadedTemplate[]>;
+    private dataAddSubject: Subject<UploadedTemplate> = new Subject<UploadedTemplate>();
+
+    /**
+     * @type {Subject<UploadedTemplate>}
+     */
+    private dataCreateSubject: Subject<UploadedTemplate> = new Subject<UploadedTemplate>();
+
+    /**
+     * @type {Subject<any>}
+     */
+    private dataUpdateSubject: Subject<any> = new Subject<any>();
 
     /**
      * @type {Array}
      */
-    private uploadedTemplates: UploadedTemplate[] = [];
-
-    private uploadedTemplatesObserver: any;
-
+    private uploadedTemplates: Observable<UploadedTemplate[]>;
 
     constructor () {
-        this.uploadedTemplates$ = new Observable((observer) => {
-            this.uploadedTemplatesObserver = observer;
-        });
+        this.uploadedTemplates = Observable.of([]);
 
-        this.uploadedTemplates$.subscribe((result) => {
-            this.uploadedTemplates = result;
-        });
+        this.onDataAdd();
+        this.onDataCreate();
+        this.onDataUpdate();
     }
 
     /**
      * @param template
      */
     public addTemplate (template: UploadedTemplate): void {
-        this.uploadedTemplates.push(template);
-        this.uploadedTemplatesObserver.next(this.uploadedTemplates);
+        this.dataAddSubject.next(template);
     }
 
     /**
      * @returns {Observable<UploadedTemplate[]>}
      */
-    public getObserver (): Observable<UploadedTemplate[]> {
-        return this.uploadedTemplates$;
+    public getUploadedTemplates (): Observable<UploadedTemplate[]> {
+        return this.uploadedTemplates;
     }
 
-    public getUploadedTemplates (): void {
-        this.uploadedTemplatesObserver.next(this.uploadedTemplates);
+    public onDataAdd (): void {
+        this.dataAddSubject
+            .subscribe(this.dataCreateSubject);
+    }
+
+    public onDataCreate (): void {
+       this.dataCreateSubject
+            .map((template: UploadedTemplate) => {
+                return (templates: UploadedTemplate[]) => {
+                    return templates.concat(template);
+                };
+            })
+            .subscribe(this.dataUpdateSubject);
+    }
+
+    public onDataUpdate (): void {
+        this.dataUpdateSubject
+            .scan((templates: UploadedTemplate[], operation) => {
+                return operation(templates);
+            }, [])
+            .publishReplay(1)
+            .refCount()
+            .subscribe((result) => {
+                this.uploadedTemplates = Observable.of(result);
+            });
     }
 }

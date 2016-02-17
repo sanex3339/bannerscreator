@@ -1,6 +1,7 @@
 import { AppInjector } from '../../AppInjector';
 import { ApplicationStage } from '../../Interfaces/ApplicationStage';
 import { Injector } from 'angular2/core';
+import { UploadedTemplate } from "../UploadedTemplate/UploadedTemplate";
 import { UploadedTemplatesService } from '../../Services/UploadedTemplatesService/UploadedTemplatesService';
 
 export class EditStage implements ApplicationStage {
@@ -15,12 +16,10 @@ export class EditStage implements ApplicationStage {
             uploadedTemplatesService: UploadedTemplatesService = injector.get(UploadedTemplatesService),
             result: boolean = false;
 
-        uploadedTemplatesService.getObserver()
-            .subscribe((templates) => {
+        uploadedTemplatesService.getUploadedTemplates()
+            .subscribe((templates: UploadedTemplate[]) => {
                 result = !!templates.length;
             });
-
-        uploadedTemplatesService.getUploadedTemplates();
 
         return result;
     }

@@ -33,11 +33,9 @@ export class BannersEditor {
     constructor (
         uploadedTemplatesService: UploadedTemplatesService
     ) {
-        uploadedTemplatesService.getObserver()
+        uploadedTemplatesService.getUploadedTemplates()
             .subscribe((result) => {
                 this.uploadedTemplates = result;
             });
-
-        uploadedTemplatesService.getUploadedTemplates();
     }
 }
