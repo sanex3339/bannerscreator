@@ -1,19 +1,34 @@
 import { Component } from 'angular2/core';
 import { Injectable } from 'angular2/core';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
+import { ObservableData } from '../../Interfaces/ObservableData';
 import 'rxjs/add/operator/share';
 
 @Injectable()
-export class FileUploadService {
-    public progress$: Observable<number>;
+export class FileUploadService implements ObservableData {
+    /**
+     * @param Observable<number>
+     */
+    private progress$: Observable<number>;
 
+    /**
+     * @type {number}
+     */
     private progress: number = 0;
+
     private progressObserver: any;
 
     constructor () {
         this.progress$ = new Observable(observer => {
             this.progressObserver = observer
-        }).share();
+        });
+    }
+
+    /**
+     * @returns {Observable<number>}
+     */
+    public getObserver (): Observable<number> {
+        return this.progress$;
     }
 
     /**

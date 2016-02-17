@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable } from 'angular2/core';
+import { Component, Injectable } from 'angular2/core';
 import { BannersEditorTemplate } from './BannersEditorTemplate';
 import { CanActivate } from 'angular2/router';
 import { EditStage } from '../../Models/Stages/EditStage';
@@ -33,9 +33,11 @@ export class BannersEditor {
     constructor (
         uploadedTemplatesService: UploadedTemplatesService
     ) {
-        uploadedTemplatesService.getUploadedTemplates()
+        uploadedTemplatesService.getObserver()
             .subscribe((result) => {
                 this.uploadedTemplates = result;
             });
+
+        uploadedTemplatesService.getUploadedTemplates();
     }
 }

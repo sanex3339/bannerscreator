@@ -1,18 +1,28 @@
 import { Component, Injectable } from 'angular2/core';
-import { Observable } from "rxjs/Observable";
-import 'rxjs/Rx';
 
 @Injectable()
 export class LocalStorageService {
     constructor () {
-        console.log(1);
+        console.log('LocalStorage service initialization');
     }
 
-    public static getItem (key: string) {
-        localStorage.getItem(key);
+    /**
+     * @param key
+     * @returns {any}
+     */
+    public getItem (key: string): any {
+        try {
+            return JSON.parse(localStorage.getItem(key));
+        } catch (e) {
+            return null;
+        }
     }
 
-    public static setItem (key: string, value: any): void {
-        localStorage.setItem(key, value);
+    /**
+     * @param key
+     * @param value
+     */
+    public setItem (key: string, value: any): void {
+        localStorage.setItem(key, JSON.stringify(value));
     }
 }

@@ -20,3 +20,4 @@ bootstrap(AppComponent, [
 ]).then((appRef: ComponentRef) => {
     AppInjector(appRef.injector);
 });
+

@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable } from 'angular2/core';
+import { Component, Injectable } from 'angular2/core';
 import { CanActivate } from 'angular2/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { RedirectService } from '../../Services/RedirectService/RedirectService';
@@ -73,8 +73,8 @@ export class PSDUploader {
      * @param uploadedTemplatesService
      */
     constructor (
-        @Inject(FileUploadService) fileUploadService: FileUploadService,
-        @Inject(RedirectService) redirectService: RedirectService,
+        fileUploadService: FileUploadService,
+        redirectService: RedirectService,
         uploadedTemplatesService: UploadedTemplatesService
     ) {
         this.fileUploadService = fileUploadService;
@@ -100,9 +100,10 @@ export class PSDUploader {
             return;
         }
 
-        this.fileUploadService.progress$.subscribe(progress => {
-            this.uploadProgress = progress;
-        });
+        this.fileUploadService.getObserver()
+            .subscribe(progress => {
+                this.uploadProgress = progress;
+            });
 
         this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(
             (result) => {
