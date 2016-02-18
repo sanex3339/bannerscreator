@@ -36,5 +36,9 @@ export class BannersEditor {
             .subscribe((result) => {
                 this.uploadedTemplates = result;
             });
+
+        setTimeout(() => {
+            uploadedTemplatesService.set(new UploadedTemplate('test', 'path', 'logo', true));
+        }, 1000)
     }
 }
