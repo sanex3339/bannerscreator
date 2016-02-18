@@ -31,9 +31,9 @@ export class UploadedTemplatesService implements ObservableData {
     constructor () {
         this.uploadedTemplates = Observable.of([]);
 
-        this.onDataAdd();
-        this.onDataCreate();
-        this.onDataUpdate();
+        this.onDataAdd<UploadedTemplate>(this.dataAddSubject, this.dataCreateSubject);
+        this.onDataCreate<UploadedTemplate>(this.dataCreateSubject, this.dataUpdateSubject);
+        this.onDataUpdate<UploadedTemplate>(this.dataUpdateSubject, this.uploadedTemplates);
     }
 
     /**
@@ -50,30 +50,41 @@ export class UploadedTemplatesService implements ObservableData {
         return this.uploadedTemplates;
     }
 
-    public onDataAdd (): void {
-        this.dataAddSubject
-            .subscribe(this.dataCreateSubject);
+    /**
+     * @param addSubject
+     * @param createSubject
+     */
+    public onDataAdd <T>(addSubject: Subject<T>, createSubject: Subject<T>): void {
+        addSubject.subscribe(createSubject);
     }
 
-    public onDataCreate (): void {
-       this.dataCreateSubject
-            .map((template: UploadedTemplate) => {
-                return (templates: UploadedTemplate[]) => {
+    /**
+     * @param createSubject
+     * @param updateSubject
+     */
+    public onDataCreate <T>(createSubject: Subject<T>, updateSubject: Subject<T>): void {
+       createSubject
+            .map((template: T) => {
+                return (templates: T[]) => {
                     return templates.concat(template);
                 };
             })
-            .subscribe(this.dataUpdateSubject);
+            .subscribe(updateSubject);
     }
 
-    public onDataUpdate (): void {
-        this.dataUpdateSubject
-            .scan((templates: UploadedTemplate[], operation) => {
+    /**
+     * @param updateSubject
+     * @param observer
+     */
+    public onDataUpdate <T>(updateSubject: Subject<T>, observer: Observable<any>): void {
+        updateSubject
+            .scan((templates: T[], operation) => {
                 return operation(templates);
             }, [])
             .publishReplay(1)
             .refCount()
             .subscribe((result) => {
-                this.uploadedTemplates = Observable.of(result);
+                observer = Observable.of(result);
             });
     }
 }
