@@ -22,6 +22,11 @@ export interface ObservableData <T> {
      * @param observer
      */
     onDataUpdate <T>(updateSubject: Subject<T>, observer: Observable<any>): void;
+
+    /**
+     * @param operation
+     */
+    setDataOperation (operation: ObservableDataOperation<T>): void;
 }
 
 export interface ObservableDataOperation <T> extends Function {

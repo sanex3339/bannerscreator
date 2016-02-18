@@ -14,6 +14,9 @@ export class ObservableDataService <T> implements ObservableData <T> {
      */
     private dataCreateSubject: Subject<T> = new Subject<T>();
 
+    /**
+     * @type {ObservableDataOperation<T>}
+     */
     private dataOperation: ObservableDataOperation<T>;
 
     /**
@@ -52,10 +55,6 @@ export class ObservableDataService <T> implements ObservableData <T> {
      */
     public getData (): Observable<T[]> {
         return this.data;
-    }
-
-    public setDataOperation (operation: ObservableDataOperation<T>) {
-        this.dataOperation = operation;
     }
 
     /**
@@ -99,5 +98,12 @@ export class ObservableDataService <T> implements ObservableData <T> {
             .publishReplay(1)
             .refCount()
             .subscribe(this.dataProviderSubject);
+    }
+
+    /**
+     * @param operation
+     */
+    public setDataOperation (operation: ObservableDataOperation<T>) {
+        this.dataOperation = operation;
     }
 }
