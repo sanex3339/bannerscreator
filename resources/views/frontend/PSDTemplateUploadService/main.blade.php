@@ -17,6 +17,7 @@
                         type="submit"
                         class="btn btn-default"
                         (click)="psdTemplateUploadHandler($event)"
+                        [disabled]="isSubmitted"
                 >Загрузить</button>
             </span>
             </div>

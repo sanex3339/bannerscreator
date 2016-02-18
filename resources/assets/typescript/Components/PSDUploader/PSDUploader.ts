@@ -29,6 +29,11 @@ export class PSDUploader {
     private fileUploadService: FileUploadService;
 
     /**
+     * @type {boolean}
+     */
+    private isSubmitted: boolean = false;
+
+    /**
      * @type RedirectService
      */
     private redirectService: RedirectService;
@@ -60,7 +65,7 @@ export class PSDUploader {
     /**
      * @type UploadedTemplatesService
      */
-    private uploadedTemplatesService: UploadedTemplatesService;
+    private uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate>;
 
     /**
      * @type {string}
@@ -75,7 +80,7 @@ export class PSDUploader {
     constructor (
         fileUploadService: FileUploadService,
         redirectService: RedirectService,
-        uploadedTemplatesService: UploadedTemplatesService
+        uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate>
     ) {
         this.fileUploadService = fileUploadService;
         this.redirectService = redirectService;
@@ -99,6 +104,8 @@ export class PSDUploader {
         if (!this.psdTemplates.length) {
             return;
         }
+
+        this.isSubmitted = true;
 
         this.fileUploadService.getObserver()
             .subscribe(progress => {

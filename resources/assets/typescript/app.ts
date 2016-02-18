@@ -1,6 +1,3 @@
-///<reference path="../../../node_modules/angular2/typings/browser.d.ts"/>
-///<reference path="Typings/underscore/underscore.d.ts"/>
-
 import { AppComponent } from './app.component';
 import { AppInjector } from './AppInjector';
 import { ApplicationStageService } from './Services/ApplicationStageService/ApplicationStageService';

@@ -1,6 +1,7 @@
 process.env.DISABLE_NOTIFIER = true;
 
 var elixir = require('laravel-elixir'),
+    path = require('path'),
     webpack = require('webpack');
 
 require('laravel-elixir-livereload');
@@ -40,31 +41,48 @@ elixir(function(mix) {
     /**
      * Scripts webpack bundling and copying
      **/
-    mix.copy('node_modules/angular2/bundles/angular2-polyfills.min.js', 'public/js/angular2');
 
-    mix.webpack('app.ts', {
+    mix.webpack({
+        vendor: 'vendor.ts',
+        app: 'app.ts'
+    }, {
+        debug: true,
+        devtool: 'source-map',
         resolve: {
-            extensions: ['', '.ts', '.webpack.js', '.web.js', '.js']
+            extensions: ['', '.ts', '.js']
         },
         module: {
             loaders: [
                 {
-                    test: /\.ts/,
+                    test: /\.ts$/,
                     loader: 'awesome-typescript-loader',
                     exclude: /node_modules/
                 }
             ]
         },
-        devtool: 'source-map',
-        /*plugins: [
-            new webpack.optimize.UglifyJsPlugin({
+        plugins: [
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'vendor',
+                filename: 'vendor.js',
+                minChunks: Infinity
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'common',
+                filename: 'common.js',
+                minChunks: 2,
+                chunks: [
+                    'app',
+                    'vendor'
+                ]
+            }),
+            /*new webpack.optimize.UglifyJsPlugin({
                 compress: {
                     warnings: false
                 },
                 minimize: true,
                 mangle: false
-            })
-        ]*/
+            })*/
+        ]
     }, 'public/js', 'resources/assets/typescript');
 
     /**

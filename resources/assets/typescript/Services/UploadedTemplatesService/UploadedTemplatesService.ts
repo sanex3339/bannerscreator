@@ -1,52 +1,56 @@
 import { Component, Injectable } from 'angular2/core';
 import { Observable, Subject } from 'rxjs';
-import { ObservableData } from '../../Interfaces/ObservableData'
+import { ObservableData, ObservableDataOperation } from '../../Interfaces/ObservableData'
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
+import * as _ from 'underscore';
 
 @Injectable()
-@Component({
-    'providers': [UploadedTemplate]
-})
-export class UploadedTemplatesService implements ObservableData {
+export class UploadedTemplatesService <T extends UploadedTemplate> implements ObservableData {
     /**
      * @type {Subject<UploadedTemplate>}
      */
-    private dataAddSubject: Subject<UploadedTemplate> = new Subject<UploadedTemplate>();
+    private dataAddSubject: Subject<T> = new Subject<T>();
 
     /**
      * @type {Subject<UploadedTemplate>}
      */
-    private dataCreateSubject: Subject<UploadedTemplate> = new Subject<UploadedTemplate>();
+    private dataCreateSubject: Subject<T> = new Subject<T>();
+
+    /**
+     * @type {Subject<UploadedTemplate>}
+     */
+    private dataProviderSubject: Subject<T[]> = new Subject<T[]>();
 
     /**
      * @type {Subject<any>}
      */
-    private dataUpdateSubject: Subject<any> = new Subject<any>();
+    private dataUpdateSubject: Subject<T> = new Subject<T>();
 
     /**
      * @type {Array}
      */
-    private uploadedTemplates: Observable<UploadedTemplate[]>;
+    private uploadedTemplates: Observable<T[]>;
 
     constructor () {
         this.uploadedTemplates = Observable.of([]);
 
-        this.onDataAdd<UploadedTemplate>(this.dataAddSubject, this.dataCreateSubject);
-        this.onDataCreate<UploadedTemplate>(this.dataCreateSubject, this.dataUpdateSubject);
-        this.onDataUpdate<UploadedTemplate>(this.dataUpdateSubject, this.uploadedTemplates);
+        this.onDataAdd(this.dataAddSubject, this.dataCreateSubject);
+        this.onDataCreate(this.dataCreateSubject, this.dataUpdateSubject);
+        this.onDataUpdate(this.dataUpdateSubject, this.uploadedTemplates);
+        this.onDataProcessed();
     }
 
     /**
      * @param template
      */
-    public addTemplate (template: UploadedTemplate): void {
+    public addTemplate (template: T): void {
         this.dataAddSubject.next(template);
     }
 
     /**
-     * @returns {Observable<UploadedTemplate[]>}
+     * @returns {Observable<T[]>}
      */
-    public getUploadedTemplates (): Observable<UploadedTemplate[]> {
+    public getUploadedTemplates (): Observable<T[]> {
         return this.uploadedTemplates;
     }
 
@@ -54,7 +58,7 @@ export class UploadedTemplatesService implements ObservableData {
      * @param addSubject
      * @param createSubject
      */
-    public onDataAdd <T>(addSubject: Subject<T>, createSubject: Subject<T>): void {
+    public onDataAdd (addSubject: Subject<T>, createSubject: Subject<T>): void {
         addSubject.subscribe(createSubject);
     }
 
@@ -62,29 +66,41 @@ export class UploadedTemplatesService implements ObservableData {
      * @param createSubject
      * @param updateSubject
      */
-    public onDataCreate <T>(createSubject: Subject<T>, updateSubject: Subject<T>): void {
-       createSubject
-            .map((template: T) => {
+    public onDataCreate (createSubject: Subject<T>, updateSubject: Subject<T>): void {
+        createSubject
+            .map((template: T): any => {
                 return (templates: T[]) => {
-                    return templates.concat(template);
+                    return _.uniq(
+                        templates.concat(template),
+                        (template: T) => {
+                            return template.getName()
+                        }
+                    );
                 };
             })
             .subscribe(updateSubject);
     }
 
     /**
+     */
+    public onDataProcessed (): void {
+        this.dataProviderSubject
+            .subscribe((result) => {
+                this.uploadedTemplates = Observable.of(result);
+            });
+    };
+
+    /**
      * @param updateSubject
      * @param observer
      */
-    public onDataUpdate <T>(updateSubject: Subject<T>, observer: Observable<any>): void {
+    public onDataUpdate (updateSubject: Subject<T>, observer: Observable<T[]>): void {
         updateSubject
-            .scan((templates: T[], operation) => {
+            .scan((templates: T[], operation: any) => {
                 return operation(templates);
             }, [])
             .publishReplay(1)
             .refCount()
-            .subscribe((result) => {
-                observer = Observable.of(result);
-            });
+            .subscribe(this.dataProviderSubject);
     }
 }
