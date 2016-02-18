@@ -13,10 +13,10 @@ export class EditStage implements ApplicationStage {
      */
     public stageCondition (): boolean {
         let injector: Injector = AppInjector(),
-            uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate> = injector.get(UploadedTemplatesService),
+            uploadedTemplatesService: UploadedTemplatesService = injector.get(UploadedTemplatesService),
             result: boolean = false;
 
-        uploadedTemplatesService.getUploadedTemplates()
+        uploadedTemplatesService.get()
             .subscribe((templates: UploadedTemplate[]) => {
                 result = !!templates.length;
             });

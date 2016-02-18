@@ -63,14 +63,14 @@ export class PSDUploader {
     private progressBarVisibility: boolean = false;
 
     /**
-     * @type UploadedTemplatesService
-     */
-    private uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate>;
-
-    /**
      * @type {string}
      */
     private uploadRoute: string = '/api/upload-file';
+
+    /**
+     * @type UploadedTemplatesService
+     */
+    private uploadedTemplatesService: UploadedTemplatesService;
 
     /**
      * @param fileUploadService
@@ -80,7 +80,7 @@ export class PSDUploader {
     constructor (
         fileUploadService: FileUploadService,
         redirectService: RedirectService,
-        uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate>
+        uploadedTemplatesService: UploadedTemplatesService
     ) {
         this.fileUploadService = fileUploadService;
         this.redirectService = redirectService;
@@ -135,7 +135,7 @@ export class PSDUploader {
      */
     private saveUploadedTemplatesData (files: any[]): void {
         for (let file of files) {
-            this.uploadedTemplatesService.addTemplate(
+            this.uploadedTemplatesService.set(
                 new UploadedTemplate(
                     file['imageName'],
                     file['imagePath'],

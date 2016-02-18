@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-export interface ObservableData {
+export interface ObservableData <T> {
     /**
      * @param addSubject
      * @param createSubject
@@ -25,5 +25,5 @@ export interface ObservableData {
 }
 
 export interface ObservableDataOperation <T> extends Function {
-    (data: T[]): T[];
+    (dataItem: T): (dataArray: T[]) => T[];
 }

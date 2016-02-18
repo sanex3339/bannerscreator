@@ -31,9 +31,9 @@ export class BannersEditor {
      * @param uploadedTemplatesService
      */
     constructor (
-        uploadedTemplatesService: UploadedTemplatesService<UploadedTemplate>
+        uploadedTemplatesService: UploadedTemplatesService
     ) {
-        uploadedTemplatesService.getUploadedTemplates()
+        uploadedTemplatesService.get()
             .subscribe((result) => {
                 this.uploadedTemplates = result;
             });
