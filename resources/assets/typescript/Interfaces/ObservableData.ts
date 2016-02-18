@@ -5,13 +5,13 @@ export interface ObservableData <T> {
      * @param addSubject
      * @param createSubject
      */
-    onDataAdd <T>(addSubject: Subject<T>, createSubject: Subject<T>): void;
+    onDataAdded <T>(addSubject: Subject<T>, createSubject: Subject<T>): void;
 
     /**
      * @param createSubject
      * @param updateSubject
      */
-    onDataCreate <T>(createSubject: Subject<T>, updateSubject: Subject<T>): void;
+    onDataCreated <T>(createSubject: Subject<T>, updateSubject: Subject<T>): void;
 
     /**
      */
@@ -21,7 +21,7 @@ export interface ObservableData <T> {
      * @param updateSubject
      * @param observer
      */
-    onDataUpdate <T>(updateSubject: Subject<T>, observer: Observable<any>): void;
+    onDataUpdated <T>(updateSubject: Subject<T>, observer: Observable<any>): void;
 
     /**
      * @param operation

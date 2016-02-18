@@ -38,9 +38,9 @@ export class ObservableDataService <T> implements ObservableData <T> {
     constructor () {
         this.data = Observable.of([]);
 
-        this.onDataAdd(this.dataAddSubject, this.dataCreateSubject);
-        this.onDataCreate(this.dataCreateSubject, this.dataUpdateSubject);
-        this.onDataUpdate(this.dataUpdateSubject, this.data);
+        this.onDataAdded(this.dataAddSubject, this.dataCreateSubject);
+        this.onDataCreated(this.dataCreateSubject, this.dataUpdateSubject);
+        this.onDataUpdated(this.dataUpdateSubject, this.data);
         this.onDataProcessed();
     }
 
@@ -62,7 +62,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
      * @param addSubject
      * @param createSubject
      */
-    public onDataAdd (addSubject: Subject<T>, createSubject: Subject<T>): void {
+    public onDataAdded (addSubject: Subject<T>, createSubject: Subject<T>): void {
         addSubject.subscribe(createSubject);
     }
 
@@ -70,7 +70,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
      * @param createSubject
      * @param updateSubject
      */
-    public onDataCreate (createSubject: Subject<T>, updateSubject: Subject<T>): void {
+    public onDataCreated (createSubject: Subject<T>, updateSubject: Subject<T>): void {
         createSubject
             .map((data: T): any => {
                 return this.dataOperation(data);
@@ -91,7 +91,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
      * @param updateSubject
      * @param observer
      */
-    public onDataUpdate (updateSubject: Subject<T>, observer: Observable<T[]>): void {
+    public onDataUpdated (updateSubject: Subject<T>, observer: Observable<T[]>): void {
         updateSubject
             .scan((data: T[], operation: any) => {
                 return operation(data);
