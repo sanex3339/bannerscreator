@@ -1,3 +1,4 @@
+import { DEFAULT_DATA_OPERATION } from "./DefaultDataOperation";
 import { Injectable } from 'angular2/core';
 import { Observable, Subject } from 'rxjs';
 import { ObservableData, ObservableDataOperation } from '../../Interfaces/ObservableData'
@@ -17,7 +18,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
     /**
      * @type {ObservableDataOperation<T>}
      */
-    private dataOperation: ObservableDataOperation<T>;
+    private dataOperation: ObservableDataOperation<T> = DEFAULT_DATA_OPERATION;
 
     /**
      * @type {Subject<T[]>}
