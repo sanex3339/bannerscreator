@@ -21,11 +21,6 @@ export class ObservableDataService <T> implements ObservableData <T> {
     private dataOperation: ObservableDataOperation<T> = DEFAULT_DATA_OPERATION;
 
     /**
-     * @type {Subject<T[]>}
-     */
-    private dataProviderSubject: Subject<T[]> = new Subject<T[]>();
-
-    /**
      * @type {Subject<any>}
      */
     private dataUpdateSubject: Subject<T> = new Subject<T>();
@@ -41,7 +36,6 @@ export class ObservableDataService <T> implements ObservableData <T> {
         this.onDataAdded(this.dataAddSubject, this.dataCreateSubject);
         this.onDataCreated(this.dataCreateSubject, this.dataUpdateSubject);
         this.onDataUpdated(this.dataUpdateSubject, this.data);
-        this.onDataProcessed();
     }
 
     /**
@@ -79,26 +73,16 @@ export class ObservableDataService <T> implements ObservableData <T> {
     }
 
     /**
-     */
-    public onDataProcessed (): void {
-        this.dataProviderSubject
-            .subscribe((result) => {
-                this.data = Observable.of(result);
-            });
-    };
-
-    /**
      * @param updateSubject
      * @param observer
      */
     public onDataUpdated (updateSubject: Subject<T>, observer: Observable<T[]>): void {
-        updateSubject
+        this.data = updateSubject
             .scan((data: T[], operation: any) => {
                 return operation(data);
             }, [])
             .publishReplay(1)
-            .refCount()
-            .subscribe(this.dataProviderSubject);
+            .refCount();
     }
 
     /**

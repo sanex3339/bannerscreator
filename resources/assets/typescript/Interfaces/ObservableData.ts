@@ -14,10 +14,6 @@ export interface ObservableData <T> {
     onDataCreated <T>(createSubject: Subject<T>, updateSubject: Subject<T>): void;
 
     /**
-     */
-    onDataProcessed <T>(): void;
-
-    /**
      * @param updateSubject
      * @param observer
      */
