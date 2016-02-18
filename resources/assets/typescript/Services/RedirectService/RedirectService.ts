@@ -20,22 +20,17 @@ export class RedirectService {
      * @param link
      * @param delay
      */
-    public redirect (link: string, delay: number = 800): void {
-        Observable
-            .of(true)
-            .delay(delay)
-            .subscribe((success) => {
-                this.navigate([link]);
-            });
+    public async redirect (link: string, delay: number = 800): Promise<any> {
+        await this.delay(delay);
+        this.router.navigate([link]);
     }
 
     /**
-     * Navigate to given route
+     * Timeout delay
      *
-     * @param linkParams
-     * @returns {Promise<any>}
+     * @param delay
      */
-    private navigate (linkParams: any[]): Promise<any> {
-        return this.router.navigate(linkParams);
+    private delay (delay: number): Promise<any> {
+        return new Promise((resolve) => setTimeout(resolve, delay));
     }
 }
