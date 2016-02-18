@@ -35,7 +35,8 @@ export class ObservableDataService <T> implements ObservableData <T> {
 
         this.onDataAdded(this.dataAddSubject, this.dataCreateSubject);
         this.onDataCreated(this.dataCreateSubject, this.dataUpdateSubject);
-        this.onDataUpdated(this.dataUpdateSubject, this.data);
+        this.data = this.onDataUpdated(this.dataUpdateSubject);
+        this.data.subscribe();
     }
 
     /**
@@ -74,10 +75,9 @@ export class ObservableDataService <T> implements ObservableData <T> {
 
     /**
      * @param updateSubject
-     * @param observer
      */
-    public onDataUpdated (updateSubject: Subject<T>, observer: Observable<T[]>): void {
-        this.data = updateSubject
+    public onDataUpdated (updateSubject: Subject<T>): Observable<T[]> {
+        return updateSubject
             .scan((data: T[], operation: any) => {
                 return operation(data);
             }, [])

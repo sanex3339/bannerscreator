@@ -17,7 +17,7 @@ export interface ObservableData <T> {
      * @param updateSubject
      * @param observer
      */
-    onDataUpdated <T>(updateSubject: Subject<T>, observer: Observable<any>): void;
+    onDataUpdated <T>(updateSubject: Subject<T>): Observable<T[]>;
 
     /**
      * @param operation

@@ -10,7 +10,6 @@ import { Tab } from '../UI/Tabs/Tab';
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 import { UploadedTemplatesService } from '../../Services/UploadedTemplatesService/UploadedTemplatesService';
 
-@Injectable()
 @CanActivate(() => {
     SetStage(Stage.EditStage, new EditStage());
 

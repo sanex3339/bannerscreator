@@ -10,7 +10,6 @@ import { UploadStage } from '../../Models/Stages/UploadStage';
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 import { UploadedTemplatesService } from '../../Services/UploadedTemplatesService/UploadedTemplatesService';
 
-@Injectable()
 @CanActivate(() => {
     SetStage(Stage.UploadStage, new UploadStage());
 
