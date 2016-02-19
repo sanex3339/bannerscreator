@@ -39,6 +39,6 @@ export class BannersEditor {
 
         setTimeout(() => {
             uploadedTemplatesService.set(new UploadedTemplate('test', 'path', 'logo', true));
-        }, 1000)
+        }, 1000);
     }
 }

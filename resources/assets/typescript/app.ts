@@ -17,12 +17,7 @@ bootstrap(AppComponent, [
     ObservableDataService,
     RedirectService,
     ROUTER_PROVIDERS,
-    provide(UploadedTemplatesService, {
-        useFactory: (dataService: ObservableDataService<any>) => {
-            return new UploadedTemplatesService(dataService);
-        },
-        deps: [ObservableDataService]
-    })
+    UploadedTemplatesService
 ]).then((appRef: ComponentRef) => {
     AppInjector(appRef.injector);
 });
