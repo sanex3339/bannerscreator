@@ -1,8 +1,8 @@
 import { Component, Injectable } from 'angular2/core';
 import { CanActivate } from 'angular2/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
-import { RedirectService } from '../../Services/RedirectService/RedirectService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
+import { RedirectService } from '../../Services/RedirectService/RedirectService';
 import { Stage } from '../../Enums/Stage';
 import { SetStage } from '../../RouteHooks/SetStage';
 import { StageCheck } from '../../RouteHooks/StageCheck';
@@ -17,7 +17,7 @@ import { UploadedTemplatesService } from '../../Services/UploadedTemplatesServic
 })
 @Component({
     'directives': [ProgressBar],
-    'providers': [FileUploadService, RedirectService, UploadedTemplate],
+    'providers': [FileUploadService],
     'selector': 'state-template',
     'templateUrl': '/templates/PSDTemplateUploadService.main'
 })
@@ -99,7 +99,9 @@ export class PSDUploader {
         this.progressBarVisibility = true;
     }
 
-    public psdTemplateUploadHandler () {
+    public async psdTemplateUploadHandler (): Promise<any> {
+        let result: any;
+
         if (!this.psdTemplates.length) {
             return;
         }
@@ -111,19 +113,18 @@ export class PSDUploader {
                 this.uploadProgress = progress;
             });
 
-        this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(
-            (result) => {
-                if (!result['images']) {
-                    return;
-                }
+        try {
+            result = await this.fileUploadService.upload(this.uploadRoute, this.psdTemplates);
+        } catch (error) {
+            document.write(error)
+        }
 
-                this.saveUploadedTemplatesData(result['images']);
-                this.redirectService.redirect(this.redirectRoute)
-            },
-            (error) => {
-                document.write(error);
-            }
-        );
+        if (!result['images']) {
+            return;
+        }
+
+        this.saveUploadedTemplatesData(result['images']);
+        this.redirectService.redirect(this.redirectRoute);
     }
 
     /**
