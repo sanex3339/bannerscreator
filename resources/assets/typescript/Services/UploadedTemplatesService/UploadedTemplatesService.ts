@@ -1,6 +1,5 @@
 import { Injectable } from 'angular2/core';
 import { Collection } from '../../Interfaces/Collection';
-import { LocalStorage } from '../../Decorators/LocalStorage';
 import { Observable } from 'rxjs/Observable'
 import { ObservableDataService } from "../ObservableDataService/ObservableDataService";
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
@@ -8,7 +7,9 @@ import * as _ from 'underscore';
 
 @Injectable()
 export class UploadedTemplatesService implements Collection {
-    @LocalStorage()
+    /**
+     * @type ObservableDataService<UploadedTemplate>
+     */
     private observableDataService: ObservableDataService<UploadedTemplate>;
 
     constructor (
