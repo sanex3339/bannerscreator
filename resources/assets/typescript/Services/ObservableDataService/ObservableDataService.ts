@@ -28,11 +28,9 @@ export class ObservableDataService <T> implements ObservableData <T> {
     /**
      * @type {Array}
      */
-    private data: Observable<T[]>;
+    private data: Observable<T[]> = Observable.of([]);
 
     constructor () {
-        this.data = Observable.of([]);
-
         this.onDataAdded(this.dataAddSubject, this.dataCreateSubject);
         this.onDataCreated(this.dataCreateSubject, this.dataUpdateSubject);
         this.data = this.onDataUpdated(this.dataUpdateSubject);
