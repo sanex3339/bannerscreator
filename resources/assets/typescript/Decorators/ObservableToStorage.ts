@@ -30,7 +30,6 @@ export function ObservableToStorage (
                 }
 
                 localStorage.setItem(key, JSON.stringify(data));
-                target[decoratedPropertyName] = Observable.of(data);
             });
         });
 
@@ -38,8 +37,6 @@ export function ObservableToStorage (
 
         Object.defineProperty(target, decoratedPropertyName, {
             get: (): any => {
-                console.log(1);
-
                 try {
                     let localStorageData: string = JSON.parse(localStorage.getItem(key)),
                         returnObservable = Observable.of(localStorageData)
@@ -54,12 +51,8 @@ export function ObservableToStorage (
                 return target[tempProperty];
             },
             set: (value: any): void => {
-                if (target[tempProperty] == target[decoratedPropertyName]) {
-                    return;
-                }
-
-                target[tempProperty] = Observable.of(value);
-                setter.next(Observable.of(value));
+                target[tempProperty] = value;
+                setter.next(value);
             }
         });
     };
