@@ -1,4 +1,4 @@
-import { Component, Injectable } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CanActivate } from 'angular2/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';

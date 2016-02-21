@@ -1,4 +1,4 @@
-import { Component, Injectable } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { BannersEditorOverview } from './BannersEditorOverview';
 import { BannersEditorTemplate } from './BannersEditorTemplate';
 import { CanActivate } from 'angular2/router';

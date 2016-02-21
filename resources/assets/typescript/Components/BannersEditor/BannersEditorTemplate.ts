@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 
 @Component({
