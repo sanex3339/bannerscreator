@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from 'angular2/core';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 
 @Component({
-    'inputs': ['templateData'],
+    'inputs': ['templateData: template-data'],
     'selector': 'banners-editor-template',
     'templateUrl': '/templates/BannersEditor.template'
 })

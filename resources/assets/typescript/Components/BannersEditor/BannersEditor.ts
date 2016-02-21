@@ -1,4 +1,5 @@
 import { Component, Injectable } from 'angular2/core';
+import { BannersEditorOverview } from './BannersEditorOverview';
 import { BannersEditorTemplate } from './BannersEditorTemplate';
 import { CanActivate } from 'angular2/router';
 import { EditStage } from '../../Models/Stages/EditStage';
@@ -16,7 +17,12 @@ import { UploadedTemplatesService } from '../../Services/UploadedTemplatesServic
     return StageCheck();
 })
 @Component({
-    'directives': [BannersEditorTemplate, Tabs, Tab],
+    'directives': [
+        BannersEditorOverview,
+        BannersEditorTemplate,
+        Tabs,
+        Tab
+    ],
     'selector': 'state-template',
     'templateUrl': '/templates/BannersEditor.main'
 })
