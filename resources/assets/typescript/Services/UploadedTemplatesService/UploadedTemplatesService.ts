@@ -1,22 +1,15 @@
 import { Injectable } from 'angular2/core';
-import { Collection } from '../../Interfaces/Collection';
 import { Observable } from 'rxjs/Observable'
 import { ObservableDataService } from "../ObservableDataService/ObservableDataService";
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 import * as _ from 'underscore';
 
 @Injectable()
-export class UploadedTemplatesService implements Collection {
-    /**
-     * @type ObservableDataService<UploadedTemplate>
-     */
-    private observableDataService: ObservableDataService<UploadedTemplate>;
+export class UploadedTemplatesService extends ObservableDataService<UploadedTemplate> {
+    constructor () {
+        super();
 
-    constructor (
-        observableDataService: ObservableDataService<UploadedTemplate>
-    ) {
-        this.observableDataService = observableDataService;
-        this.observableDataService.setDataOperation(
+        super.setDataOperation(
             (template: UploadedTemplate) => {
                 return (templates: UploadedTemplate[]) => {
                     return _.uniq(
@@ -31,16 +24,16 @@ export class UploadedTemplatesService implements Collection {
     }
 
     /**
-     * @param template
-     */
-    public set (template: UploadedTemplate): void {
-        this.observableDataService.setData(template);
-    }
-
-    /**
      * @returns {Observable<T[]>}
      */
     public get (): Observable<UploadedTemplate[]> {
-        return this.observableDataService.getData();
+        return super.getData();
+    }
+
+    /**
+     * @param template
+     */
+    public set (template: UploadedTemplate): void {
+        super.setData(template);
     }
 }

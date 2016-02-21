@@ -1,10 +1,11 @@
+import { Collection } from "../../Interfaces/Collection";
 import { DEFAULT_DATA_OPERATION } from "./DefaultDataOperation";
 import { Injectable } from 'angular2/core';
 import { Observable, Subject } from 'rxjs';
-import { ObservableData, ObservableDataOperation } from '../../Interfaces/ObservableData'
+import { ObservableDataOperation } from '../../Interfaces/ObservableDataOperation'
 
 @Injectable()
-export class ObservableDataService <T> implements ObservableData <T> {
+export abstract class ObservableDataService <T> implements Collection {
     /**
      * @type {Subject<T>}
      */
@@ -38,16 +39,25 @@ export class ObservableDataService <T> implements ObservableData <T> {
     }
 
     /**
+     */
+    public abstract get (): Observable<T[]>;
+
+    /**
      * @param data
      */
-    public setData (data: T): void {
+    public abstract set (data: T): void;
+
+    /**
+     * @param data
+     */
+    protected setData (data: T): void {
         this.dataAddSubject.next(data);
     }
 
     /**
      * @returns {Observable<T[]>}
      */
-    public getData (): Observable<T[]> {
+    protected getData (): Observable<T[]> {
         return this.data;
     }
 
@@ -55,7 +65,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
      * @param addSubject
      * @param createSubject
      */
-    public onDataAdded (addSubject: Subject<T>, createSubject: Subject<T>): void {
+    private onDataAdded (addSubject: Subject<T>, createSubject: Subject<T>): void {
         addSubject.subscribe(createSubject);
     }
 
@@ -63,7 +73,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
      * @param createSubject
      * @param updateSubject
      */
-    public onDataCreated (createSubject: Subject<T>, updateSubject: Subject<T>): void {
+    private onDataCreated (createSubject: Subject<T>, updateSubject: Subject<T>): void {
         createSubject
             .map((data: T): any => {
                 return this.dataOperation(data);
@@ -74,7 +84,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
     /**
      * @param updateSubject
      */
-    public onDataUpdated (updateSubject: Subject<T>): Observable<T[]> {
+    private onDataUpdated (updateSubject: Subject<T>): Observable<T[]> {
         return updateSubject
             .scan((data: T[], operation: any) => {
                 return operation(data);
@@ -86,7 +96,7 @@ export class ObservableDataService <T> implements ObservableData <T> {
     /**
      * @param operation
      */
-    public setDataOperation (operation: ObservableDataOperation<T>) {
+    protected setDataOperation (operation: ObservableDataOperation<T>) {
         this.dataOperation = operation;
     }
 }
