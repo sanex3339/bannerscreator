@@ -1,11 +1,11 @@
 import { AppInjector } from '../AppInjector';
 import { ApplicationStageService } from '../Services/ApplicationStageService/ApplicationStageService';
 import { Injector } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { RedirectService } from '../Services/RedirectService/RedirectService';
 
 export const StageCheck = () => {
     let injector: Injector = AppInjector(),
-        router: Router = injector.get(Router),
+        redirectService: RedirectService = injector.get(RedirectService),
         applicationStageService: ApplicationStageService = injector.get(ApplicationStageService);
 
     return new Promise((resolve) => {
@@ -14,7 +14,7 @@ export const StageCheck = () => {
                 if (result) {
                     resolve(true);
                 } else {
-                    router.navigate(['Root']);
+                    redirectService.redirect('Root');
                     resolve(false);
                 }
             });

@@ -20,7 +20,7 @@ export class RedirectService {
      * @param link
      * @param delay
      */
-    public async redirect (link: string, delay: number = 800): Promise<any> {
+    public async redirect (link: string, delay: number = 0): Promise<any> {
         await this.delay(delay);
         this.router.navigate([link]);
     }

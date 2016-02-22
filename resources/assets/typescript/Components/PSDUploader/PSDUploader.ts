@@ -124,7 +124,7 @@ export class PSDUploader {
         }
 
         this.saveUploadedTemplatesData(result['images']);
-        this.redirectService.redirect(this.redirectRoute);
+        this.redirectService.redirect(this.redirectRoute, 800);
     }
 
     /**
