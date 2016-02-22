@@ -140,7 +140,8 @@ export class PSDUploader {
                     file['imageName'],
                     file['imagePath'],
                     file['imageExtension'],
-                    file['hasLogo']
+                    file['hasLogo'],
+                    file['imageSize']
                 )
             );
         }

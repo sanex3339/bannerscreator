@@ -44,7 +44,18 @@ export class BannersEditor {
             });
 
         setTimeout(() => {
-            uploadedTemplatesService.set(new UploadedTemplate('test', 'path', 'logo', true));
+            uploadedTemplatesService.set(
+                new UploadedTemplate(
+                    'test',
+                    'path',
+                    'logo',
+                    true,
+                    {
+                        'width': 300,
+                        'height': 250
+                    }
+                )
+            );
         }, 1000);
     }
 }

@@ -9,7 +9,7 @@
         <tr *ngIf="template.hasLogo()">
             <td>
                 <img
-                        class="img-responsive centered"
+                        class="img-responsive center-block"
                         [src]="template.getLogoPath()"
                         [alt]="template.getName()"
                 >
@@ -18,7 +18,7 @@
         <tr>
             <td>
                 <img
-                        class="img-responsive centered"
+                        class="img-responsive center-block"
                         [src]="template.getFullPath()"
                         [alt]="template.getName()"
                 >

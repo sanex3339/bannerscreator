@@ -95,6 +95,8 @@ class PSDParser
      * @param $file
      */
     private function convertPSDFile($file) {
+        $fullImage = $this->getFullPSD($file);
+
         $imageName = $this->getOutputImageName($file);
         $outputImageDirectory = $this->getOutputImageDirectory($imageName);
 
@@ -110,7 +112,7 @@ class PSDParser
         }
 
         $this->saveImage(
-            $this->getFullPSD($file),
+            $fullImage,
             $outputImageDirectory,
             $imageName
         );
@@ -120,6 +122,7 @@ class PSDParser
             'imageName' => $imageName,
             'imageExtension' => PSDParser::IMAGE_EXTENSION,
             'hasLogo' => $hasLogoLayer,
+            'imageSize' => $fullImage->getImageGeometry()
         ];
     }
 

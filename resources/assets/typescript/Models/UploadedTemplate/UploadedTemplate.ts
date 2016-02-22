@@ -1,4 +1,5 @@
 import { Component, Injectable } from 'angular2/core';
+import { ImageSize } from '../../Interfaces/ImageSize';
 
 @Injectable()
 export class UploadedTemplate {
@@ -14,17 +15,24 @@ export class UploadedTemplate {
     private extension: string;
     private logo: boolean;
 
+    private width: number;
+    private height: number;
+
     /**
      * @param name
      * @param path
      * @param extension
      * @param logo
+     * @param imageSize
      */
-    constructor (name: string, path: string, extension: string, logo: boolean) {
+    constructor (name: string, path: string, extension: string, logo: boolean, imageSize: ImageSize) {
         this.name = name;
         this.path = path;
         this.extension = extension;
         this.logo = logo;
+
+        this.width = imageSize['width'];
+        this.height = imageSize['height'];
     }
 
     /**
@@ -63,9 +71,23 @@ export class UploadedTemplate {
     }
 
     /**
+     * @returns {number}
+     */
+    public getHeight (): number {
+        return this.height;
+    }
+
+    /**
      * @returns {string}
      */
     public getLogoPath (): string {
         return `${this.path}/${UploadedTemplate.LOGO_NAME}.${this.extension}`;
+    }
+
+    /**
+     * @returns {number}
+     */
+    public getWidth (): number {
+        return this.width;
     }
 }
