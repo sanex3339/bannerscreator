@@ -1,4 +1,4 @@
-<div class="col-md-6 centered">
+<div class="col-xs-6 centered">
     <h2>Выберите PSD макеты для загрузки</h2>
     <div class="row bottom-space">
         <form>

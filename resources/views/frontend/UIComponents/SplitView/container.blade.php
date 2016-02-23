@@ -1,4 +1,9 @@
 <div class="split-view-deselected-overlay"></div>
-<div class="split-view-container">
+<table class="table table-bordered split-view-header">
+    <tr>
+        <th>@{{ title }}</th>
+    </tr>
+</table>
+<table class="table table-bordered split-view-container">
     <ng-content></ng-content>
-</div>
+</table>
