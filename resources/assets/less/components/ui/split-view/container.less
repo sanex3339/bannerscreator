@@ -1,0 +1,75 @@
+split-view-container {
+  display: block;
+  position: relative;
+
+  overflow: hidden;
+
+  top: 0;
+  left: 0;
+
+  width: 50%;
+
+  background: #fff;
+  box-shadow: 0 0 50px 10px #a2a2a2;
+
+  z-index: 1000;
+
+  transition: width .4s ease-in-out,
+              background-color .1s ease-in-out;
+
+  &:first-child {
+    z-index: 1001;
+  }
+
+  &:last-child {
+    left: auto;
+    right: 0;
+  }
+
+  &:hover {
+    width: 80%;
+    z-index: 1002;
+  }
+
+  &.selected {
+    width: 80%;
+  }
+
+  &.deselected {
+    width: 20%;
+
+    background: #f0f0f0;
+
+    & .split-view-deselected-overlay {
+      opacity: 0.1;
+    }
+  }
+
+  & .split-view-deselected-overlay {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: #a2a2a2;
+    opacity: 0;
+
+    z-index: 1005;
+  }
+
+  & .split-view-container {
+    top: inherit;
+    left: inherit;
+    right: inherit;
+
+    width: 100%;
+    height: auto;
+
+    & > * {
+      margin: 0;
+    }
+  }
+}

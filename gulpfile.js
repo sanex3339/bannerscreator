@@ -25,7 +25,6 @@ elixir(function(mix) {
     var bootstrapPath = 'node_modules/bootstrap-less';
 
     mix.copy(bootstrapPath, 'resources/vendor/bootstrap/');
-    mix.copy(bootstrapPath + '/js/bootstrap.min.js', 'public/js/bootstrap');
     mix.copy(bootstrapPath + '/fonts', 'public/fonts');
 
     /**
