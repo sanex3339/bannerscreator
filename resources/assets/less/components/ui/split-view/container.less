@@ -43,6 +43,7 @@ split-view-container {
 
     & .split-view-deselected-overlay {
       opacity: 0.1;
+      visibility: visible;
     }
   }
 
@@ -57,10 +58,12 @@ split-view-container {
 
     background: #171616;
     opacity: 0;
+    visibility: hidden;
 
     z-index: 1005;
 
-    transition: opacity .2s ease-in-out;
+    transition: opacity .2s ease-in-out,
+                visibility .2s ease-in-out;
   }
 
   & .split-view-header {
