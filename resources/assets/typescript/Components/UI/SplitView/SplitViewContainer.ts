@@ -23,11 +23,6 @@ export class SplitViewContainer {
 
     private componentMouseEnterHandler (): void {
         $('split-view-container').addClass('deselected');
-        $('.split-view-container').each((index, element) => {
-            $(element).css({
-                'min-width': $(element).children().first().css('width')
-            });
-        });
         $(this).removeClass('deselected').addClass('selected');
     }
 

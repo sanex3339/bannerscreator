@@ -4,6 +4,8 @@
                 class="img-responsive center-block"
                 [src]="templateData.getFullPath()"
                 [alt]="templateData.getName()"
+                [style.max-width.px]="templateData.getWidth()"
+                [style.height.px]="templateData.getHeight()"
         >
     </split-view-container>
     <split-view-container title="Превью шаблона">
