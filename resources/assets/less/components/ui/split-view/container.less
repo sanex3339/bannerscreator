@@ -25,13 +25,7 @@ split-view {
 }
 
 split-view-container {
-  display: block;
-  position: relative;
-
   overflow: hidden;
-
-  top: 0;
-  left: 0;
 
   width: 50%;
 
@@ -48,9 +42,6 @@ split-view-container {
   }
 
   &:last-child {
-    left: auto;
-    right: 0;
-
     & .split-view-header, & .split-view-container {
       right: 0;
       float: right;
@@ -70,18 +61,18 @@ split-view-container {
 
     top: 0;
     left: 0;
-
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    right: 0;
 
     background: #171616;
     opacity: 0;
+
     visibility: hidden;
 
     z-index: @base-zindex + 5;
 
     transition: opacity @transition,
-    visibility @transition;
+                visibility @transition;
   }
 
   & .split-view-header {
@@ -89,13 +80,6 @@ split-view-container {
   }
 
   & .split-view-container {
-    top: inherit;
-    left: inherit;
-    right: inherit;
-
-    width: 100%;
-    height: auto;
-
     margin-bottom: 0;
 
     border: 1px solid #ddd;
