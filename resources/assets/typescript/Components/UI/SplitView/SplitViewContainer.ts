@@ -1,4 +1,4 @@
-import { Component, ElementRef } from 'angular2/core';
+import { Component } from 'angular2/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -7,26 +7,7 @@ import * as $ from 'jquery';
     'templateUrl': '/templates/UIComponents.SplitView.container'
 })
 export class SplitViewContainer {
-    private rootElement: HTMLElement;
-
     private title: string;
 
-    constructor (refElement: ElementRef) {
-        this.rootElement = refElement.nativeElement;
-
-        this.bindEvents();
-    }
-
-    private bindEvents (): void {
-        $(this.rootElement).hover(this.componentMouseEnterHandler, this.componentMouseLeaveHandler);
-    }
-
-    private componentMouseEnterHandler (): void {
-        $('split-view-container').addClass('deselected');
-        $(this).removeClass('deselected').addClass('selected');
-    }
-
-    private componentMouseLeaveHandler (): void {
-        $('split-view-container').removeClass('selected deselected');
-    }
+    constructor () {}
 }

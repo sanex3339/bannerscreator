@@ -1,3 +1,19 @@
+split-view {
+  &:hover {
+
+    & split-view-container:not(:hover) {
+      width: 15%;
+
+      background: #f0f0f0;
+
+      & .split-view-deselected-overlay {
+        opacity: 0.1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
 split-view-container {
   display: block;
   position: relative;
@@ -32,24 +48,11 @@ split-view-container {
   }
 
   &:hover {
-    width: 80%;
-    z-index: 1002;
-  }
-
-  &.selected {
     width: 85%;
+
     box-shadow: 0 0 25px 0 #4a4848;
-  }
 
-  &.deselected {
-    width: 15%;
-
-    background: #f0f0f0;
-
-    & .split-view-deselected-overlay {
-      opacity: 0.1;
-      visibility: visible;
-    }
+    z-index: 1002;
   }
 
   & .split-view-deselected-overlay {
