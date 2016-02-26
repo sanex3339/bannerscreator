@@ -1,5 +1,7 @@
+import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
 import { BannersPreviewer } from './BannersPreviewer';
-import { Component, OnInit } from 'angular2/core';
+import { Component } from 'angular2/core';
+import { Subject } from 'rxjs';
 import { SplitView } from "../UI/SplitView/SplitView";
 import { SplitViewContainer } from "../UI/SplitView/SplitViewContainer";
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
@@ -14,10 +16,24 @@ import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate
     'selector': 'banners-editor-template',
     'templateUrl': '/templates/BannersEditor.template'
 })
-export class BannersEditorTemplate implements OnInit {
+export class BannersEditorTemplate {
+    private bannersDataService: BannersDataService;
+
+    private bannerStyles: any = {
+        banner: {
+
+        }
+    };
+
     private templateData: UploadedTemplate;
 
-    ngOnInit (): void {
-        console.log(this.templateData);
+    constructor (bannersDataService: BannersDataService) {
+        this.bannersDataService = bannersDataService;
+    }
+
+    private onInputChange (event): void {
+        this.bannersDataService
+            .getStyles()
+            .next(this.bannerStyles);
     }
 }

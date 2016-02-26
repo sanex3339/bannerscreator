@@ -1,15 +1,37 @@
-import { Component } from 'angular2/core';
+import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
+import { Component, ElementRef } from 'angular2/core';
+import { Subject } from 'rxjs';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
+import * as $ from 'jquery';
 
 @Component({
-    'inputs': ['bannersStyles: banners-styles'],
     'selector': 'banners-previewer',
-    'template': '<div style="background: red; width: 1000px; height: 1000px;"></div>'
+    'templateUrl': '/templates/BannersEditor.banner'
 })
 export class BannersPreviewer {
-    private bannersStyles: any = {};
+    private banner: HTMLElement;
 
-    constructor () {
-        console.log('BannersPreviewer init');
+    private bannersDataService: BannersDataService;
+
+    constructor (elementRef: ElementRef, bannersDataService: BannersDataService) {
+        this.banner = elementRef.nativeElement;
+        this.bannersDataService = bannersDataService;
+
+        bannersDataService
+            .getStyles()
+            .subscribe((styles: any) => {
+                this.applyStyles(styles);
+            })
+    }
+
+    /**
+     * @param styles
+     */
+    private applyStyles (styles: any): void {
+        console.log(styles);
+
+        for (let bannerClass in styles) {
+            $(`.${bannerClass}`).css(styles[bannerClass]);
+        }
     }
 }

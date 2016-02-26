@@ -3,7 +3,7 @@
 @container-background-default: #fff;
 @container-background-not-hovered: #f0f0f0;
 
-@container-width-hovered: 85%;
+@container-width-hovered: 80%;
 @container-width-not-hovered: 100% - @container-width-hovered;
 
 @base-zindex: 1000;
@@ -17,14 +17,18 @@ split-view {
       background: @container-background-not-hovered;
 
       & .split-view-deselected-overlay {
-        opacity: 0.1;
-        visibility: visible;
+        opacity: 1;
+      }
+
+      & .split-view-header, & .split-view-container {
+        opacity: 0.94;
       }
     }
   }
 }
 
 split-view-container {
+  position: relative;
   overflow: hidden;
 
   width: 50%;
@@ -67,12 +71,20 @@ split-view-container {
     background: #171616;
     opacity: 0;
 
-    visibility: hidden;
+    z-index: @base-zindex + 4;
+
+    transition: opacity @transition;
+  }
+
+  & .split-view-header, & .split-view-container {
+    position: relative;
+
+    background: inherit;
+    border: 1px solid #ddd;
 
     z-index: @base-zindex + 5;
 
-    transition: opacity @transition,
-                visibility @transition;
+    transition: opacity @transition;
   }
 
   & .split-view-header {
@@ -81,8 +93,6 @@ split-view-container {
 
   & .split-view-container {
     margin-bottom: 0;
-
-    border: 1px solid #ddd;
 
     & > * {
       margin-top: 0;
