@@ -13,8 +13,8 @@
                 class="center-block banner-previewer"
                 [style.max-width.px]="templateData.getWidth()"
                 [style.height.px]="templateData.getHeight()"
-                [banner-styles]="bannerStyles"
+                [format]="format"
         ></banners-previewer>
     </split-view-container>
 </split-view>
-<input type="text" [(ngModel)]="bannerStyles.banner.background" (keyup)="onInputChange($event)">
+<input type="text" [(ngModel)]="bannerSpecificStyles.banner.background" (keyup)="onInputChange($event)">

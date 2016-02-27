@@ -1,42 +1,50 @@
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { BannerData } from "../../Models/BannerData/BannerData";
 import { ObservableDataService } from "../ObservableDataService/ObservableDataService";
+import * as _ from 'underscore';
 
-export class BannersDataService {
-    /**
-     * @type {string}
-     */
-    private key: string = 'test_key';
+export class BannersDataService extends ObservableDataService<BannerData> {
+    constructor () {
+        super();
 
-    /**
-     * @type {Subject<any>}
-     */
-    private styles: Subject<any> = new Subject<any>();
-
-    /**
-     * @type {string}
-     */
-    private title: string = 'test_title';
-
-    constructor () {}
-
-    /**
-     * @returns {string}
-     */
-    public getKey (): string {
-        return this.key;
+        super.setDataOperation(
+            (bannerData: BannerData) => {
+                return (bannersData: BannerData[]) => {
+                    return _.uniq(
+                        bannersData.concat(bannerData),
+                        (bannerData: BannerData) => {
+                            return bannerData.getFormat
+                        }
+                    )
+                }
+            }
+        );
     }
 
     /**
-     * @returns {Subject<any>}
+     * @returns {Observable<T[]>}
      */
-    public getStyles (): Subject<any> {
-        return this.styles;
+    public get (): Observable<BannerData[]> {
+        return super.getData();
     }
 
     /**
-     * @returns {string}
+     * @param format
+     * @returns {Observable<T[]>}
      */
-    public getTitle (): string {
-        return this.title;
+    public getByFormat (format: string): Observable<BannerData[]> {
+        return super.getData()
+            .map((bannersData: BannerData[]) => {
+                return bannersData.filter((bannerData: BannerData) => {
+                    return bannerData.getFormat() === format;
+                });
+            });
+    }
+
+    /**
+     * @param bannerData
+     */
+    public set (bannerData: BannerData): void {
+        super.setData(bannerData);
     }
 }

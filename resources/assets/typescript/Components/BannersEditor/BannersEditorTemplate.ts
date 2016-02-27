@@ -1,6 +1,7 @@
+import { BannerData } from "../../Models/BannerData/BannerData";
 import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
 import { BannersPreviewer } from './BannersPreviewer';
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { Subject } from 'rxjs';
 import { SplitView } from "../UI/SplitView/SplitView";
 import { SplitViewContainer } from "../UI/SplitView/SplitViewContainer";
@@ -16,24 +17,62 @@ import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate
     'selector': 'banners-editor-template',
     'templateUrl': '/templates/BannersEditor.template'
 })
-export class BannersEditorTemplate {
+export class BannersEditorTemplate implements OnInit {
+    /**
+     * @type BannerDataService
+     */
     private bannersDataService: BannersDataService;
 
-    private bannerStyles: any = {
+    /**
+     * @type BannerData
+     */
+    private bannerData: BannerData;
+
+    /**
+     * @type any
+     */
+    private bannerSpecificStyles: any = {
         banner: {
 
         }
     };
 
+    /**
+     * @type string
+     */
+    private format: string;
+
+    /**
+     * @type UploadedTemplate
+     */
     private templateData: UploadedTemplate;
 
     constructor (bannersDataService: BannersDataService) {
         this.bannersDataService = bannersDataService;
     }
 
+    public ngOnInit (): void {
+        this.format = `${this.templateData.getWidth()}x${this.templateData.getHeight()}`;
+
+        this.bannersDataService.set(
+            new BannerData(this.format)
+        );
+
+        this.bannersDataService.getByFormat(this.format)
+            .subscribe((bannersData: BannerData[]) => {
+                this.bannerData = bannersData[0];
+            })
+    }
+
+    /**
+     * @param event
+     */
     private onInputChange (event): void {
-        this.bannersDataService
-            .getStyles()
-            .next(this.bannerStyles);
+        this.bannerData
+            .setSpecificStyles(this.bannerSpecificStyles);
+
+        this.bannersDataService.set(
+            this.bannerData
+        );
     }
 }

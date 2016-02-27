@@ -1,26 +1,45 @@
+import { BannerData } from "../../Models/BannerData/BannerData";
 import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
-import { Component, ElementRef } from 'angular2/core';
+import { Component, ElementRef, OnInit } from 'angular2/core';
 import { Subject } from 'rxjs';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 import * as $ from 'jquery';
 
 @Component({
+    'inputs': ['format'],
     'selector': 'banners-previewer',
     'templateUrl': '/templates/BannersEditor.banner'
 })
-export class BannersPreviewer {
-    private banner: HTMLElement;
+export class BannersPreviewer implements OnInit {
+    /**
+     * @type BannerData
+     */
+    private bannerData: BannerData;
 
+    /**
+     * @type BannersDataService
+     */
     private bannersDataService: BannersDataService;
 
-    constructor (elementRef: ElementRef, bannersDataService: BannersDataService) {
-        this.banner = elementRef.nativeElement;
-        this.bannersDataService = bannersDataService;
+    /**
+     * @type format
+     */
+    private format: string;
 
-        bannersDataService
-            .getStyles()
-            .subscribe((styles: any) => {
-                this.applyStyles(styles);
+    /**
+     * @param bannersDataService
+     */
+    constructor (bannersDataService: BannersDataService) {
+        this.bannersDataService = bannersDataService;
+    }
+
+    public ngOnInit (): void {
+        this.bannersDataService.getByFormat(this.format)
+            .subscribe((bannersData: BannerData[]) => {
+                this.bannerData = bannersData[0];
+
+                this.applyStyles(this.bannerData.getGeneralStyles());
+                this.applyStyles(this.bannerData.getSpecificStyles());
             })
     }
 
@@ -28,7 +47,9 @@ export class BannersPreviewer {
      * @param styles
      */
     private applyStyles (styles: any): void {
-        console.log(styles);
+        if (!styles) {
+            return;
+        }
 
         for (let bannerClass in styles) {
             $(`.${bannerClass}`).css(styles[bannerClass]);
