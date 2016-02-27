@@ -1,7 +1,7 @@
 import { BannerData } from "../../Models/BannerData/BannerData";
 import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
 import { Component, ElementRef, OnInit } from 'angular2/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
 import * as $ from 'jquery';
 
@@ -38,17 +38,12 @@ export class BannersPreviewer implements OnInit {
             .subscribe((bannersData: BannerData[]) => {
                 this.bannerData = bannersData[0];
 
-                this.bannerData.getGeneralStyles()
-                    .subscribe((generalStyles: Object) => {
-                        console.log(generalStyles);
-
-                        this.applyStyles(generalStyles)
-                    });
-
-                this.bannerData.getSpecificStyles()
-                    .subscribe((specificStyles: Object) => {
-                        this.applyStyles(specificStyles)
-                    });
+                Observable.merge(
+                    this.bannerData.getGeneralStyles(),
+                    this.bannerData.getSpecificStyles()
+                ).subscribe((styles: Object) => {
+                    this.applyStyles(styles)
+                });
             });
     }
 
