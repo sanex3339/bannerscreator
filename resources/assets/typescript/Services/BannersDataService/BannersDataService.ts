@@ -29,6 +29,8 @@ export class BannersDataService extends ObservableDataService<BannerData> {
     }
 
     /**
+     * Returns Observable<BannerData[]> with one item, associated with given format.
+     *
      * @param format
      * @returns {Observable<T[]>}
      */

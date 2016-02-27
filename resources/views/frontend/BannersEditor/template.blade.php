@@ -17,4 +17,7 @@
         ></banners-previewer>
     </split-view-container>
 </split-view>
+test
 <input type="text" [(ngModel)]="bannerSpecificStyles.banner.background" (keyup)="onInputChange($event)">
+<br>
+<input type="text" [(ngModel)]="bannerSpecificStyles.banner.opacity" (keyup)="onInputChange($event)">
