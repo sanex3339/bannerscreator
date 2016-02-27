@@ -7,27 +7,27 @@ import { ObservableDataOperation } from '../../Interfaces/ObservableDataOperatio
 @Injectable()
 export abstract class ObservableDataService <T> implements Collection {
     /**
-     * @type {Subject<T>}
+     * @param {Subject<T>}
      */
     private dataAddSubject: Subject<T> = new Subject<T>();
 
     /**
-     * @type {Subject<T>}
+     * @param {Subject<T>}
      */
     private dataCreateSubject: Subject<T> = new Subject<T>();
 
     /**
-     * @type {ObservableDataOperation<T>}
+     * @param {ObservableDataOperation<T>}
      */
     private dataOperation: ObservableDataOperation<T> = DEFAULT_DATA_OPERATION;
 
     /**
-     * @type {Subject<any>}
+     * @param {Subject<any>}
      */
     private dataUpdateSubject: Subject<T> = new Subject<T>();
 
     /**
-     * @type {Array}
+     * @param {Array}
      */
     private data: Observable<T[]> = Observable.of([]);
 

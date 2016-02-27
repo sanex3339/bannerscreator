@@ -63,16 +63,4 @@ export class BannersEditorTemplate implements OnInit {
                 this.bannerData = bannersData[0];
             })
     }
-
-    /**
-     * @param event
-     */
-    private onInputChange (event): void {
-        this.bannerData
-            .setSpecificStyles(this.bannerSpecificStyles);
-
-        this.bannersDataService.set(
-            this.bannerData
-        );
-    }
 }

@@ -13,7 +13,7 @@ export class ApplicationStageService {
     /**
      * Array with all application stages
      *
-     * @type {Array}
+     * @param {Array}
      */
     private stages: ApplicationStage[] = [];
 

@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 @Injectable()
 export class RedirectService {
     /**
-     * @type Router
+     * @param Router
      */
     private router: Router;
 

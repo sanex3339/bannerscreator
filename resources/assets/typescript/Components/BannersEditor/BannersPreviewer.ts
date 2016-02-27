@@ -38,9 +38,18 @@ export class BannersPreviewer implements OnInit {
             .subscribe((bannersData: BannerData[]) => {
                 this.bannerData = bannersData[0];
 
-                this.applyStyles(this.bannerData.getGeneralStyles());
-                this.applyStyles(this.bannerData.getSpecificStyles());
-            })
+                this.bannerData.getGeneralStyles()
+                    .subscribe((generalStyles: Object) => {
+                        console.log(generalStyles);
+
+                        this.applyStyles(generalStyles)
+                    });
+
+                this.bannerData.getSpecificStyles()
+                    .subscribe((specificStyles: Object) => {
+                        this.applyStyles(specificStyles)
+                    });
+            });
     }
 
     /**

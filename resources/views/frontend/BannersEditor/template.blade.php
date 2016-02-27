@@ -18,6 +18,6 @@
     </split-view-container>
 </split-view>
 test
-<input type="text" [(ngModel)]="bannerSpecificStyles.banner.background" (keyup)="onInputChange($event)">
+<input type="text" (keyup)="bannerData.specificStyles.setStyle('banner', 'background', $event.target.value)">
 <br>
-<input type="text" [(ngModel)]="bannerSpecificStyles.banner.opacity" (keyup)="onInputChange($event)">
+<input type="text" (keyup)="bannerData.specificStyles.setStyle('banner', 'opacity', $event.target.value)">

@@ -1,3 +1,6 @@
+import { Component } from 'angular2/core'
+import { Observable } from 'rxjs';
+import { StylesService } from "../../Services/StylesService/StylesService";
 import { Subject } from 'rxjs';
 
 export class BannerData {
@@ -14,20 +17,21 @@ export class BannerData {
     /**
      * Styles common to all banners
      *
-     * @type any
+     * @type Object
      */
-    private generalStyles: any = {
-        banner: {
-            'border': '3px solid blue'
-        }
-    };
+    private generalStyles: StylesService = new StylesService();
 
     /**
      * Styles specific to banner
      *
-     * @type any
+     * @type Object
      */
-    private specificStyles: any;
+    private specificStyles: StylesService = new StylesService();
+
+    /**
+     * @param StylesService
+     */
+    private stylesService: StylesService;
 
     /**
      * @type {string}
@@ -39,6 +43,12 @@ export class BannerData {
      */
     constructor (format: string) {
         this.format = format;
+
+        this.generalStyles.setStyles({
+            banner: {
+                border: '3px solid blue'
+            }
+        });
     }
 
     /**
@@ -56,17 +66,17 @@ export class BannerData {
     }
 
     /**
-     * @returns any
+     * @returns {StylesService}
      */
-    public getGeneralStyles (): any {
-        return this.generalStyles;
+    public getGeneralStyles (): Observable<any> {
+        return this.generalStyles.getStyles();
     }
 
     /**
-     * @returns any
+     * @returns {StylesService}
      */
-    public getSpecificStyles (): any {
-        return this.specificStyles;
+    public getSpecificStyles (): Observable<any> {
+        return this.specificStyles.getStyles();
     }
 
     /**
@@ -78,20 +88,6 @@ export class BannerData {
 
     public setKey (key: string): void {
         this.key = key;
-    }
-
-    /**
-     * @param generalStyles
-     */
-    public setGeneralStyles (generalStyles: any): void {
-        this.generalStyles = generalStyles;
-    }
-
-    /**
-     * @param specificStyles
-     */
-    public setSpecificStyles (specificStyles: any): void {
-        this.specificStyles = specificStyles;
     }
 
     /**

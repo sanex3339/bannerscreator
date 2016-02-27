@@ -11,7 +11,7 @@ export class FileUploadService {
     private progress$: Observable<number>;
 
     /**
-     * @type {number}
+     * @param {number}
      */
     private progress: number = 0;
 
