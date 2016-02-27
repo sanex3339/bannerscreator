@@ -18,6 +18,6 @@
     </split-view-container>
 </split-view>
 test
-<input type="text" (keyup)="bannerData.specificStyles.setStyle('banner', 'background', $event.target.value)">
+<input type="text" (keyup)="bannerData.setSpecificStyle('banner', 'background', $event.target.value)">
 <br>
-<input type="text" (keyup)="bannerData.specificStyles.setStyle('banner', 'opacity', $event.target.value)">
+<input type="text" (keyup)="bannerData.setSpecificStyle('banner', 'opacity', $event.target.value)">

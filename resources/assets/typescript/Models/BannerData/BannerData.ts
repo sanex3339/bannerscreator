@@ -86,6 +86,38 @@ export class BannerData {
         return this.title;
     }
 
+    /**
+     * @param clazz
+     * @param styleName
+     * @param styleValue
+     */
+    public setGeneralStyle (clazz: string, styleName: string, styleValue: string): void {
+        return this.generalStyles.setStyle(clazz, styleName, styleValue);
+    }
+
+    /**
+     * @param clazz
+     * @param styleName
+     * @param styleValue
+     */
+    public setSpecificStyle (clazz: string, styleName: string, styleValue: string): void {
+        return this.specificStyles.setStyle(clazz, styleName, styleValue);
+    }
+
+    /**
+     * @param styles
+     */
+    public setGeneralStyles (styles: Object): void {
+        return this.generalStyles.setStyles(styles);
+    }
+
+    /**
+     * @param styles
+     */
+    public setSpecificStyles (styles: Object): void {
+        return this.specificStyles.setStyles(styles);
+    }
+
     public setKey (key: string): void {
         this.key = key;
     }
