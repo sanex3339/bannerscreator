@@ -17,25 +17,27 @@
         ></banners-previewer>
     </split-view-container>
 </split-view>
-<div class="form-group">
-    <div class="col-xs-3">
-        <label for="bannerBackground">Background</label>
-        <input
-                type="text"
-                id="bannerBackground"
-                class="form-control"
-                affect-style="banner:background"
-                [banner-data]="bannerData"
-        >
-    </div>
-    <div class="col-xs-3">
-        <label for="bannerBorderColor">Border Color</label>
-        <input
-                type="text"
-                id="bannerBorderColor"
-                class="form-control"
-                affect-style="banner:borderColor"
-                [banner-data]="bannerData"
-        >
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-3">
+            <label for="bannerBackground">Background</label>
+            <input
+                    type="text"
+                    id="bannerBackground"
+                    class="form-control"
+                    affect-style="banner:background"
+                    [banner-data]="bannerData"
+            >
+        </div>
+        <div class="col-xs-3">
+            <label for="bannerBorderColor">Border Color</label>
+            <input
+                    type="text"
+                    id="bannerBorderColor"
+                    class="form-control"
+                    affect-style="banner:borderColor"
+                    [banner-data]="bannerData"
+            >
+        </div>
     </div>
 </div>
