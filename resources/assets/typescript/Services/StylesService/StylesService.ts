@@ -62,6 +62,10 @@ export class StylesService {
         this.stylesSubject.next(this._styles);
     }
 
+    /**
+     * @param stylesSubject
+     * @returns {Observable<Object>}
+     */
     private onDataUpdated (stylesSubject: Subject<Object>): Observable<Object> {
         return stylesSubject
             .asObservable()
