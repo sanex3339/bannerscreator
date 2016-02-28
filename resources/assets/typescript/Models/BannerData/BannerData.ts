@@ -44,9 +44,12 @@ export class BannerData {
     constructor (format: string) {
         this.format = format;
 
-        this.generalStyles.setStyles({
+        this.specificStyles.setStyles({
             banner: {
-                border: '3px solid blue'
+                background: 'red',
+                borderWidth: '3px',
+                borderStyle: 'solid',
+                borderColor: 'blue'
             }
         });
     }
@@ -66,10 +69,28 @@ export class BannerData {
     }
 
     /**
+     * @param clazz
+     * @param styleName
+     * @returns {string}
+     */
+    public getGeneralStyle (clazz: string, styleName: string): string {
+        return this.getStyle(this.generalStyles.getStyles(), clazz, styleName);
+    }
+
+    /**
      * @returns {StylesService}
      */
     public getGeneralStyles (): Observable<any> {
         return this.generalStyles.getStyles();
+    }
+
+    /**
+     * @param clazz
+     * @param styleName
+     * @returns {string}
+     */
+    public getSpecificStyle (clazz: string, styleName: string): string {
+        return this.getStyle(this.specificStyles.getStyles(), clazz, styleName);
     }
 
     /**
@@ -127,5 +148,21 @@ export class BannerData {
      */
     public setTitle (title: string): void {
         this.title = title;
+    }
+
+    /**
+     * @param styles
+     * @param clazz
+     * @param styleName
+     * @returns {string}
+     */
+    private getStyle (styles: Observable<Object>, clazz: string, styleName: string): string {
+        let result: string = '';
+
+        styles.subscribe((styles: Observable<Object>) => {
+            result = styles[clazz][styleName];
+        });
+
+        return result;
     }
 }
