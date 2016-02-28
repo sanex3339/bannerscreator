@@ -13,7 +13,7 @@ export class BannersDataService extends ObservableDataService<BannerData> {
                     return _.uniq(
                         bannersData.concat(bannerData),
                         (bannerData: BannerData) => {
-                            return bannerData.getFormat
+                            return bannerData.getFormat()
                         }
                     )
                 }

@@ -1,15 +1,17 @@
-import { BannerData } from "../../Models/BannerData/BannerData";
-import { BannersDataService } from "../../Services/BannersDataService/BannersDataService";
+import { AffectStyleDirective } from '../../Directives/AffectStyleDirective/AffectStyleDirective';
+import { BannerData } from '../../Models/BannerData/BannerData';
+import { BannersDataService } from '../../Services/BannersDataService/BannersDataService';
 import { BannersPreviewer } from './BannersPreviewer';
 import { Component, OnInit } from 'angular2/core';
 import { Subject } from 'rxjs';
-import { SplitView } from "../UI/SplitView/SplitView";
-import { SplitViewContainer } from "../UI/SplitView/SplitViewContainer";
-import { UploadedTemplate } from "../../Models/UploadedTemplate/UploadedTemplate";
+import { SplitView } from '../UI/SplitView/SplitView';
+import { SplitViewContainer } from '../UI/SplitView/SplitViewContainer';
+import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 
 @Component({
     'inputs': ['templateData: template-data'],
     'directives': [
+        AffectStyleDirective,
         BannersPreviewer,
         SplitView,
         SplitViewContainer
@@ -27,15 +29,6 @@ export class BannersEditorTemplate implements OnInit {
      * @type BannerData
      */
     private bannerData: BannerData;
-
-    /**
-     * @type any
-     */
-    private bannerSpecificStyles: any = {
-        banner: {
-
-        }
-    };
 
     /**
      * @type string

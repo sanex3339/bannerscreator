@@ -22,14 +22,21 @@ export class BannersPreviewer implements OnInit {
     private bannersDataService: BannersDataService;
 
     /**
+     * @param HTMLElement
+     */
+    private element: HTMLElement;
+
+    /**
      * @type format
      */
     private format: string;
 
     /**
+     * @param elementRef
      * @param bannersDataService
      */
-    constructor (bannersDataService: BannersDataService) {
+    constructor (elementRef: ElementRef, bannersDataService: BannersDataService) {
+        this.element = elementRef.nativeElement;
         this.bannersDataService = bannersDataService;
     }
 
@@ -56,7 +63,11 @@ export class BannersPreviewer implements OnInit {
         }
 
         for (let bannerClass in styles) {
-            $(`.${bannerClass}`).css(styles[bannerClass]);
+            if (!styles.hasOwnProperty(bannerClass)) {
+                continue;
+            }
+
+            $(this.element).find(`.${bannerClass}`).css(styles[bannerClass]);
         }
     }
 }

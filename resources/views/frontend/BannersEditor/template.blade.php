@@ -17,15 +17,25 @@
         ></banners-previewer>
     </split-view-container>
 </split-view>
-test
-<input
-        type="text"
-        [value]="bannerData.getSpecificStyle('banner', 'background')"
-        (keyup)="bannerData.setSpecificStyle('banner', 'background', $event.target.value)"
->
-<br>
-<input
-        type="text"
-        [value]="bannerData.getSpecificStyle('banner', 'borderColor')"
-        (keyup)="bannerData.setSpecificStyle('banner', 'borderColor', $event.target.value)"
->
+<div class="form-group">
+    <div class="col-xs-3">
+        <label for="bannerBackground">Background</label>
+        <input
+                type="text"
+                id="bannerBackground"
+                class="form-control"
+                affect-style="banner:background"
+                [banner-data]="bannerData"
+        >
+    </div>
+    <div class="col-xs-3">
+        <label for="bannerBorderColor">Border Color</label>
+        <input
+                type="text"
+                id="bannerBorderColor"
+                class="form-control"
+                affect-style="banner:borderColor"
+                [banner-data]="bannerData"
+        >
+    </div>
+</div>
