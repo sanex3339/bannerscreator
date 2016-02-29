@@ -54,6 +54,15 @@ export class BannersEditorTemplate implements OnInit {
         this.bannersDataService.getByFormat(this.format)
             .subscribe((bannersData: BannerData[]) => {
                 this.bannerData = bannersData[0];
+                this.applySpecificStyles();
             })
+    }
+
+    /**
+     * Apply specific styles, such as width and height, based on various conditions
+     */
+    private applySpecificStyles (): void {
+        this.bannerData.setSpecificStyle('banner', 'width', this.templateData.getWidth().toString());
+        this.bannerData.setSpecificStyle('banner', 'height', this.templateData.getHeight().toString());
     }
 }
