@@ -1,5 +1,5 @@
 import { Component, Injectable } from 'angular2/core';
-import { ImageSize } from '../../Interfaces/ImageSize';
+import { ImageDimension } from '../../Interfaces/ImageDimension';
 
 @Injectable()
 export class UploadedTemplate {
@@ -25,7 +25,7 @@ export class UploadedTemplate {
      * @param logo
      * @param imageSize
      */
-    constructor (name: string, path: string, extension: string, logo: boolean, imageSize: ImageSize) {
+    constructor (name: string, path: string, extension: string, logo: boolean, imageSize: ImageDimension) {
         this.name = name;
         this.path = path;
         this.extension = extension;
