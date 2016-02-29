@@ -25,6 +25,7 @@
                     type="text"
                     id="bannerBackground"
                     class="form-control"
+                    style-changer
                     [style-changer-format]="format"
                     style-changer-class="banner"
                     style-changer-style="background"
@@ -36,6 +37,7 @@
                     type="text"
                     id="bannerBorderColor"
                     class="form-control"
+                    style-changer
                     [style-changer-format]="format"
                     style-changer-class="banner"
                     style-changer-style="borderColor"

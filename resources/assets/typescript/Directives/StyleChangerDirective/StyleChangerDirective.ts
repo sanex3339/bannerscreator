@@ -11,7 +11,7 @@ import { Directive, ElementRef, OnInit } from 'angular2/core';
     host: {
         '(keyup)': 'setSpecificStyle()'
     },
-    selector: '[style-changer-class]'
+    selector: '[style-changer]'
 })
 export class StyleChangerDirective implements OnInit {
     /**
@@ -54,6 +54,11 @@ export class StyleChangerDirective implements OnInit {
     }
 
     public ngOnInit (): void {
+        if (!this.affectedFormat || !this.affectedClass || !this.affectedStyle) {
+            throw new Error('`StyleChangerDirective` must have 3 bindings: `style-changer-format`, ' +
+                '`style-changer-class` and `style-changer-style`');
+        }
+
         this.bannersDataService.getByFormat(this.affectedFormat)
             .subscribe((bannersData: BannerData[]) => {
                 this.bannerData = bannersData[0];
