@@ -66,12 +66,11 @@ elixir(function(mix) {
                 minChunks: Infinity
             }),
             new webpack.optimize.CommonsChunkPlugin({
-                name: 'common',
-                filename: 'common.js',
-                minChunks: 2,
+                name: 'app',
+                filename: 'app.js',
+                minChunks: 4,
                 chunks: [
-                    'app',
-                    'vendor'
+                    'app'
                 ]
             }),
             /*new webpack.optimize.UglifyJsPlugin({
