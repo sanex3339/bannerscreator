@@ -4,6 +4,20 @@ import { StylesService } from "../../Services/StylesService/StylesService";
 
 export class BannerData {
     /**
+     * Default general styles for all formats
+     *
+     * @type Object
+     */
+    private defaultStyles: Object = {
+        banner: {
+            background: 'red',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            borderColor: 'green'
+        }
+    };
+
+    /**
      * @type {string}
      */
     private format: string;
@@ -57,14 +71,7 @@ export class BannerData {
             this.height
         ] = this.format.split('x').map((dimension: string) => parseInt(dimension));
 
-        this.specificStyles.setStyles({
-            banner: {
-                background: 'red',
-                borderWidth: '3px',
-                borderStyle: 'solid',
-                borderColor: 'blue'
-            }
-        });
+        this.generalStyles.setStyles(this.defaultStyles);
     }
 
     /**

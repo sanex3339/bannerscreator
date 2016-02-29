@@ -1,3 +1,3 @@
-<div class="banner" style="background: red;">
+<div class="banner">
     banner
 </div>

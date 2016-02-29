@@ -59,7 +59,16 @@ export class StyleChangerDirective implements OnInit {
                 this.bannerData = bannersData[0];
             });
 
-        this.element.value = this.getSpecificStyle();
+        this.element.value = this.getDefaultStyle();
+    }
+
+    /**
+     * Set default values for inputs based on general styles for each format
+     *
+     * @returns {string}
+     */
+    private getDefaultStyle (): string {
+        return this.bannerData.getGeneralStyle(this.affectedClass, this.affectedStyle);
     }
 
     /**
