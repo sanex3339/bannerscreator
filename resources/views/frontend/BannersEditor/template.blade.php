@@ -25,8 +25,9 @@
                     type="text"
                     id="bannerBackground"
                     class="form-control"
-                    affect-style="banner:background"
-                    [banner-data]="bannerData"
+                    [style-changer-format]="format"
+                    style-changer-class="banner"
+                    style-changer-style="background"
             >
         </div>
         <div class="col-xs-3">
@@ -35,8 +36,9 @@
                     type="text"
                     id="bannerBorderColor"
                     class="form-control"
-                    affect-style="banner:borderColor"
-                    [banner-data]="bannerData"
+                    [style-changer-format]="format"
+                    style-changer-class="banner"
+                    style-changer-style="borderColor"
             >
         </div>
     </div>

@@ -1,4 +1,3 @@
-import { AffectStyleDirective } from '../../Directives/AffectStyleDirective/AffectStyleDirective';
 import { BannerData } from '../../Models/BannerData/BannerData';
 import { BannersDataService } from '../../Services/BannersDataService/BannersDataService';
 import { BannersPreviewer } from './BannersPreviewer';
@@ -6,15 +5,16 @@ import { Component, OnInit } from 'angular2/core';
 import { Subject } from 'rxjs';
 import { SplitView } from '../UI/SplitView/SplitView';
 import { SplitViewContainer } from '../UI/SplitView/SplitViewContainer';
+import { StyleChangerDirective } from '../../Directives/StyleChangerDirective/StyleChangerDirective';
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 
 @Component({
     'inputs': ['templateData: template-data'],
     'directives': [
-        AffectStyleDirective,
         BannersPreviewer,
         SplitView,
-        SplitViewContainer
+        SplitViewContainer,
+        StyleChangerDirective
     ],
     'selector': 'banners-editor-template',
     'templateUrl': '/templates/BannersEditor.template'
