@@ -3,6 +3,10 @@ import { ApplicationStageService } from '../Services/ApplicationStageService/App
 import { Injector } from 'angular2/core';
 import { RedirectService } from '../Services/RedirectService/RedirectService';
 
+/**
+ * @returns {Promise<T>}
+ * @constructor
+ */
 export const StageCheck = () => {
     let injector: Injector = AppInjector(),
         redirectService: RedirectService = injector.get(RedirectService),
