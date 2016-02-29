@@ -2,6 +2,7 @@ import { BannerData } from '../../Models/BannerData/BannerData';
 import { BannersDataService } from '../../Services/BannersDataService/BannersDataService';
 import { BannersPreviewer } from './BannersPreviewer';
 import { Component, OnInit } from 'angular2/core';
+import { FormatStylizationService } from "../../Services/FormatStylizationService/FormatStylizationService";
 import { Subject } from 'rxjs';
 import { SplitView } from '../UI/SplitView/SplitView';
 import { SplitViewContainer } from '../UI/SplitView/SplitViewContainer';
@@ -36,6 +37,11 @@ export class BannersEditorTemplate implements OnInit {
     private format: string;
 
     /**
+     * @type {StylesService}
+     */
+    private formatStylizationService: FormatStylizationService;
+
+    /**
      * @type UploadedTemplate
      */
     private templateData: UploadedTemplate;
@@ -54,15 +60,8 @@ export class BannersEditorTemplate implements OnInit {
         this.bannersDataService.getByFormat(this.format)
             .subscribe((bannersData: BannerData[]) => {
                 this.bannerData = bannersData[0];
-                this.applySpecificStyles();
+                this.formatStylizationService = new FormatStylizationService(this.bannerData);
+                this.formatStylizationService.applyFormatStyles();
             })
-    }
-
-    /**
-     * Apply specific styles, such as width and height, based on various conditions
-     */
-    private applySpecificStyles (): void {
-        this.bannerData.setSpecificStyle('banner', 'width', this.templateData.getWidth().toString());
-        this.bannerData.setSpecificStyle('banner', 'height', this.templateData.getHeight().toString());
     }
 }

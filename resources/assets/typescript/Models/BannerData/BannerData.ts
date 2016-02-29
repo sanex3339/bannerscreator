@@ -1,13 +1,17 @@
 import { Component } from 'angular2/core'
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { StylesService } from "../../Services/StylesService/StylesService";
-import { Subject } from 'rxjs';
 
 export class BannerData {
     /**
      * @type {string}
      */
     private format: string;
+
+    /**
+     * @type number
+     */
+    private height: number;
 
     /**
      * @type {string}
@@ -39,10 +43,19 @@ export class BannerData {
     private title: string = '';
 
     /**
+     * @type number
+     */
+    private width: number;
+
+    /**
      * @param format
      */
     constructor (format: string) {
         this.format = format;
+        [
+            this.width,
+            this.height
+        ] = this.format.split('x').map((dimension: string) => parseInt(dimension));
 
         this.specificStyles.setStyles({
             banner: {
@@ -66,6 +79,10 @@ export class BannerData {
      */
     public getFormat (): string {
         return this.format;
+    }
+
+    public getHeight (): number {
+        return this.height;
     }
 
     /**
@@ -105,6 +122,13 @@ export class BannerData {
      */
     public getTitle (): string {
         return this.title;
+    }
+
+    /**
+     * @returns {number}
+     */
+    public getWidth (): number {
+        return this.width;
     }
 
     /**
