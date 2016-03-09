@@ -24,8 +24,8 @@ Route::get('/edit', [
 Route::post('/api/upload-file', [
     'middleware' => 'cors',
     'uses' => 'BannersCreator\UploadController@uploadFile',
-    'as' => 'ngUploadFile']
-);
+    'as' => 'ngUploadFile'
+]);
 
 // Angular 2 templates route
 Route::get('/templates/{template}', [
