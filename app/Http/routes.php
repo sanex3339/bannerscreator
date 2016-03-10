@@ -13,24 +13,24 @@
 
 Route::get('/', [
     'uses' => 'BannersCreator\AngularRoutesController@index',
-    'as' => 'home'
+    'as' => 'ngHome'
 ]);
 
 Route::get('/edit', [
     'uses' => 'BannersCreator\AngularRoutesController@index',
-    'as' => 'edit'
+    'as' => 'ngEdit'
 ]);
 
 Route::post('/api/upload-file', [
     'middleware' => 'cors',
     'uses' => 'BannersCreator\UploadController@uploadFile',
-    'as' => 'ApiUploadFile']
-);
+    'as' => 'ngUploadFile'
+]);
 
 // Angular 2 templates route
 Route::get('/templates/{template}', [
     'uses' => 'BannersCreator\AngularTemplatesController@index',
-    'as' => 'AngularTemplatesRoute'
+    'as' => 'ngTemplates'
 ]);
 
 /*

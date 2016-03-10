@@ -19,7 +19,7 @@ import { UploadedTemplatesService } from '../../Services/UploadedTemplatesServic
     'directives': [ProgressBar],
     'providers': [FileUploadService],
     'selector': 'state-template',
-    'templateUrl': '/templates/PSDTemplateUploadService.main'
+    'templateUrl': '/templates/PSDUploader.main'
 })
 export class PSDUploader {
     /**
