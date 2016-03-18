@@ -3,7 +3,7 @@
 // Polyfills
 import 'es7-reflect-metadata/dist/browser';
 
-import 'zone.js/dist/zone-microtask';
+import 'zone.js/dist/zone';
 import 'zone.js/dist/long-stack-trace-zone';
 
 // Angular 2

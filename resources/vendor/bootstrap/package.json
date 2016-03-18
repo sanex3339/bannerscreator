@@ -2,7 +2,7 @@
   "_args": [
     [
       "bootstrap-less@^3.0.0",
-      "/Users/sanex/PhpstormProjects/bannerscreator"
+      "/home/kachalov/PhpstormProjects/bannerscreator"
     ]
   ],
   "_from": "bootstrap-less@>=3.0.0 <4.0.0",
@@ -32,7 +32,7 @@
   "_shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
   "_shrinkwrap": null,
   "_spec": "bootstrap-less@^3.0.0",
-  "_where": "/Users/sanex/PhpstormProjects/bannerscreator",
+  "_where": "/home/kachalov/PhpstormProjects/bannerscreator",
   "bugs": {
     "url": "https://github.com/distros/bootstrap-less/issues"
   },
@@ -59,8 +59,8 @@
   "main": "js/bootstrap",
   "maintainers": [
     {
-      "name": "aaike",
-      "email": "aaikevr@gmail.com"
+      "email": "aaikevr@gmail.com",
+      "name": "aaike"
     }
   ],
   "name": "bootstrap-less",
