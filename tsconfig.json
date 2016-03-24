@@ -9,8 +9,7 @@
     "noImplicitAny": false
   },
   "files": [
-    "resources/assets/typescript/app.ts",
-    "node_modules/zone.js/dist/zone.js.d.ts"
+    "resources/assets/typescript/app.ts"
   ],
   "exclude": [
     "node_modules",
